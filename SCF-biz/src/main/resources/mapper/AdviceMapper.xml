@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.AdviceMapper" >
+  <resultMap id="BaseResultMap" type="wr.com.pojo.Advice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="aid" property="aid" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="good_id" property="goodId" jdbcType="VARCHAR" />
+    <result column="good_name" property="goodName" jdbcType="VARCHAR" />
+    <result column="part_id" property="partId" jdbcType="VARCHAR" />
+    <result column="part_name" property="partName" jdbcType="VARCHAR" />
+    <result column="file_Url" property="fileUrl" jdbcType="VARCHAR" />
+    <result column="ast_modified_time" property="astModifiedTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, aid, content, email, phone, date, status, good_id, good_name, part_id, part_name, 
+    file_Url, ast_modified_time, modifier
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wr_advice
+    where aid = #{aid,jdbcType=VARCHAR}
+  </select>
+  <select id="findByStatus" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select
+  	<include refid="Base_Column_List" />
+  	from wr_advice
+  	 where status =#{status,jdbcType=VARCHAR} ORDER BY date DESC
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+  	select
+  	<include refid="Base_Column_List" />
+  	from wr_advice ORDER BY date DESC
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from wr_advice
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="wr.com.pojo.Advice" >
+    insert into wr_advice (id, aid, content, 
+      email, phone, date, 
+      status, good_id, good_name, 
+      part_id, part_name, file_Url, 
+      ast_modified_time, modifier)
+    values (#{id,jdbcType=INTEGER}, #{aid,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{goodId,jdbcType=VARCHAR}, #{goodName,jdbcType=VARCHAR}, 
+      #{partId,jdbcType=VARCHAR}, #{partName,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, 
+      #{astModifiedTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="wr.com.pojo.Advice" >
+    insert into wr_advice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="aid != null" >
+        aid,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="goodId != null" >
+        good_id,
+      </if>
+      <if test="goodName != null" >
+        good_name,
+      </if>
+      <if test="partId != null" >
+        part_id,
+      </if>
+      <if test="partName != null" >
+        part_name,
+      </if>
+      <if test="fileUrl != null" >
+        file_Url,
+      </if>
+      <if test="astModifiedTime != null" >
+        ast_modified_time,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="aid != null" >
+        #{aid,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="goodId != null" >
+        #{goodId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodName != null" >
+        #{goodName,jdbcType=VARCHAR},
+      </if>
+      <if test="partId != null" >
+        #{partId,jdbcType=VARCHAR},
+      </if>
+      <if test="partName != null" >
+        #{partName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null" >
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="astModifiedTime != null" >
+        #{astModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="wr.com.pojo.Advice" >
+    update wr_advice
+    <set >
+      <if test="aid != null" >
+        aid = #{aid,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="goodId != null" >
+        good_id = #{goodId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodName != null" >
+        good_name = #{goodName,jdbcType=VARCHAR},
+      </if>
+      <if test="partId != null" >
+        part_id = #{partId,jdbcType=VARCHAR},
+      </if>
+      <if test="partName != null" >
+        part_name = #{partName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null" >
+        file_Url = #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="astModifiedTime != null" >
+        ast_modified_time = #{astModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wr.com.pojo.Advice" >
+    update wr_advice
+    set aid = #{aid,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      good_id = #{goodId,jdbcType=VARCHAR},
+      good_name = #{goodName,jdbcType=VARCHAR},
+      part_id = #{partId,jdbcType=VARCHAR},
+      part_name = #{partName,jdbcType=VARCHAR},
+      file_Url = #{fileUrl,jdbcType=VARCHAR},
+      ast_modified_time = #{astModifiedTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="changeStatusById">
+  	update wr_advice
+  	set status = #{0}
+  	where aid = #{1}
+  </update>
+</mapper>

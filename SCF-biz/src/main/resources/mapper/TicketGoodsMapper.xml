@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.TicketGoodsMapper" >
+  <resultMap id="BaseResultMap" type="wr.com.pojo.TicketGoods" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="gid" property="gid" jdbcType="VARCHAR" />
+    <result column="gname" property="gname" jdbcType="VARCHAR" />
+    <result column="piece" property="piece" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="DOUBLE" />
+    <result column="univalent" property="univalent" jdbcType="DOUBLE" />
+    <result column="sum" property="sum" jdbcType="DOUBLE" />
+    <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+    <result column="type_id" property="typeId" jdbcType="VARCHAR" />
+    <result column="qid" property="qid" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, gid, gname, piece, amount, univalent, sum,type_name,type_id,qid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wr_ticket_goods
+    where gid = #{gid,jdbcType=VARCHAR}
+  </select>
+  <select id="findAll" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from wr_ticket_goods
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from wr_ticket_goods
+    where gid = #{gid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="wr.com.pojo.TicketGoods" >
+    insert into wr_ticket_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="gname != null" >
+        gname,
+      </if>
+      <if test="piece != null" >
+        piece,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="univalent != null" >
+        univalent,
+      </if>
+      <if test="sum != null" >
+        sum,
+      </if>
+      <if test="typeName != null" >
+        type_name,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="qid != null" >
+        qid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null" >
+        #{gid,jdbcType=VARCHAR},
+      </if>
+      <if test="gname != null" >
+        #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="piece != null" >
+        #{piece,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="univalent != null" >
+        #{univalent,jdbcType=DOUBLE},
+      </if>
+      <if test="sum != null" >
+        #{sum,jdbcType=DOUBLE},
+      </if>
+       <if test="typeName != null" >
+       #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+       #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="qid != null" >
+        #{qid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="wr.com.pojo.TicketGoods" >
+    update wr_ticket_goods
+    <set >
+      <if test="gid != null" >
+        gid = #{gid,jdbcType=VARCHAR},
+      </if>
+      <if test="gname != null" >
+        gname = #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="piece != null" >
+        piece = #{piece,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="univalent != null" >
+        univalent = #{univalent,jdbcType=DOUBLE},
+      </if>
+      <if test="sum != null" >
+        sum = #{sum,jdbcType=DOUBLE},
+      </if>
+       <if test="typeName != null" >
+       typeName=#{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+       typeId=#{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="qid != null" >
+        qid=#{qid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id= #{id}
+  </update>
+</mapper>

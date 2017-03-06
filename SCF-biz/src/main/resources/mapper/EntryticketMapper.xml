@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.EntryticketMapper" >
+  <resultMap id="BaseResultMap" type="wr.com.pojo.Entryticket" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="enter_id" property="enterId" jdbcType="VARCHAR" />
+    <result column="enter_number" property="enterNumber" jdbcType="VARCHAR" />
+    <result column="enter_date" property="enterDate" jdbcType="TIMESTAMP" />
+    <result column="car_number" property="carNumber" jdbcType="VARCHAR" />
+    <result column="sum" property="sum" jdbcType="DOUBLE" />
+    <result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="resourse" property="resourse" jdbcType="VARCHAR" />
+    <result column="group_id" property="groupId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="buyer_id" property="buyerId" jdbcType="VARCHAR" />
+    <result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
+    <result column="seller_id" property="sellerId" jdbcType="VARCHAR" />
+    <result column="invoice_num" property="invoiceNum" jdbcType="VARCHAR" />
+    <result column="invoice_id" property="invoiceId" jdbcType="VARCHAR" />
+    <result column="coolie_hire" property="coolieHire" jdbcType="DOUBLE" />
+    <result column="settlement_amount" property="settlementAmount" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, enter_id, enter_number, enter_date, car_number, sum, pic_url, status, resourse, 
+    group_id, user_id, goods_name, goods_id, buyer_name, buyer_id, seller_name, seller_id, 
+    invoice_num, invoice_id,coolie_hire, settlement_amount
+  </sql>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wr_ticket_enter
+    where user_id = #{userId,jdbcType=VARCHAR} ORDER BY enter_date DESC
+  </select>
+   <select id="selectByenterId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wr_ticket_enter
+    where enter_id = #{enterId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="wr.com.pojo.SearchEntryticket">
+ 	select 
+    <include refid="Base_Column_List" />
+    from wr_ticket_enter
+    where
+    <if test="enterNumber !=null">
+    enter_number like '%${enterNumber}%' and
+    </if>
+    <if test="buyerName !=null">
+    buyer_name = #{buyerName} and
+    </if>
+    <if test="sellerName !=null">
+    seller_name = #{sellerName} and	
+    </if>
+    <if test="invoiceNum !=null">
+    invoice_num like '%${invoiceNum}%' and
+    </if>
+    <if test="goodsName !=null">
+    goods_name like '%${goodsName}%' and
+    </if>
+    <if test="status !=null">
+    status like '%${status}%' and
+    </if>
+    <if test="startDate !=null">
+    enter_date &gt;= #{startDate} and
+    </if>
+    <if test="endDate !=null">
+    enter_date &lt;= #{endDate} and
+    </if>
+    user_id = #{userId}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from wr_ticket_enter
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wr_ticket_enter
+    where enter_id = #{enterId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="wr.com.pojo.Entryticket" >
+    insert into wr_ticket_enter (id, enter_id, enter_number, 
+      enter_date, car_number, sum, 
+      pic_url, status, resourse, 
+      group_id, user_id, goods_name, 
+      goods_id, buyer_name, buyer_id, settlement_amount,
+      seller_name, seller_id, invoice_num, coolie_hire,
+      invoice_id)
+    values (#{id,jdbcType=INTEGER}, #{enterId,jdbcType=VARCHAR}, #{enterNumber,jdbcType=VARCHAR}, 
+      #{enterDate,jdbcType=TIMESTAMP}, #{carNumber,jdbcType=VARCHAR}, #{sum,jdbcType=DOUBLE}, 
+      #{picUrl,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{resourse,jdbcType=VARCHAR}, 
+      #{groupId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, 
+      #{goodsId,jdbcType=VARCHAR}, #{buyerName,jdbcType=VARCHAR}, #{buyerId,jdbcType=VARCHAR}, 
+      #{sellerName,jdbcType=VARCHAR}, #{sellerId,jdbcType=VARCHAR}, #{invoiceNum,jdbcType=VARCHAR}, 
+      #{invoiceId,jdbcType=VARCHAR}),#{settlement_amount},#{coolie_hire}
+  </insert>
+  <insert id="insertSelective" parameterType="wr.com.pojo.Entryticket" >
+    insert into wr_ticket_enter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="enterId != null" >
+        enter_id,
+      </if>
+      <if test="enterNumber != null" >
+        enter_number,
+      </if>
+      <if test="enterDate != null" >
+        enter_date,
+      </if>
+      <if test="carNumber != null" >
+        car_number,
+      </if>
+      <if test="sum != null" >
+        sum,
+      </if>
+      <if test="picUrl != null" >
+        pic_url,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="resourse != null" >
+        resourse,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="buyerName != null" >
+        buyer_name,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="sellerName != null" >
+        seller_name,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="invoiceNum != null" >
+        invoice_num,
+      </if>
+      <if test="invoiceId != null" >
+        invoice_id,
+      </if>
+      <if test="coolieHire != null" >
+        coolie_hire,
+      </if>
+      <if test="settlementAmount != null" >
+        settlement_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="enterId != null" >
+        #{enterId,jdbcType=VARCHAR},
+      </if>
+      <if test="enterNumber != null" >
+        #{enterNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="enterDate != null" >
+        #{enterDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="carNumber != null" >
+        #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sum != null" >
+        #{sum,jdbcType=DOUBLE},
+      </if>
+      <if test="picUrl != null" >
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="resourse != null" >
+        #{resourse,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerName != null" >
+        #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerName != null" >
+        #{sellerName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceNum != null" >
+        #{invoiceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceId != null" >
+        #{invoiceId,jdbcType=VARCHAR},
+      </if>
+      <if test="coolieHire != null" >
+        #{coolieHire,jdbcType=DOUBLE},
+      </if>
+      <if test="settlementAmount != null" >
+        #{settlementAmount,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="wr.com.pojo.Entryticket" >
+    update wr_ticket_enter
+    <set >
+      <if test="enterNumber != null" >
+        enter_number = #{enterNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="enterDate != null" >
+        enter_date = #{enterDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="carNumber != null" >
+        car_number = #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sum != null" >
+        sum = #{sum,jdbcType=DOUBLE},
+      </if>
+      <if test="picUrl != null" >
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="resourse != null" >
+        resourse = #{resourse,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerName != null" >
+        buyer_name = #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        buyer_id = #{buyerId,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerName != null" >
+        seller_name = #{sellerName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceNum != null" >
+        invoice_num = #{invoiceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceId != null" >
+        invoice_id = #{invoiceId,jdbcType=VARCHAR},
+      </if>
+       <if test="coolieHire != null" >
+       coolie_hire =#{coolieHire,jdbcType=DOUBLE},
+      </if>
+      <if test="settlementAmount != null" >
+       settlement_amount= #{settlementAmount,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where  enter_id = #{enterId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wr.com.pojo.Entryticket" >
+    update wr_ticket_enter
+    set enter_id = #{enterId,jdbcType=VARCHAR},
+      enter_date = #{enterDate,jdbcType=TIMESTAMP},
+      car_number = #{carNumber,jdbcType=VARCHAR},
+      sum = #{sum,jdbcType=DOUBLE},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      resourse = #{resourse,jdbcType=VARCHAR},
+      group_id = #{groupId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=VARCHAR},
+      buyer_name = #{buyerName,jdbcType=VARCHAR},
+      buyer_id = #{buyerId,jdbcType=VARCHAR},
+      seller_name = #{sellerName,jdbcType=VARCHAR},
+      seller_id = #{sellerId,jdbcType=VARCHAR},
+      invoice_num = #{invoiceNum,jdbcType=VARCHAR},
+      invoice_id = #{invoiceId,jdbcType=VARCHAR}
+      coolieHire= #{coolieHire,jdbcType=DOUBLE},
+      settlementAmount= #{settlementAmount,jdbcType=DOUBLE},
+    where enter_id = #{enterId,jdbcType=VARCHAR}
+  </update>
+</mapper>

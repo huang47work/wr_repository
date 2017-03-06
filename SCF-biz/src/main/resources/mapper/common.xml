@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "COMMON">
+    <resultMap id = "BASE_RESULT_MAP" type = "wr.com.pojo.BaseEntity">
+        <id column = "id" property = "id" />
+        <result column = "create_time" property = "createTime" />
+        <result column = "last_modify_time" property = "lastModifyTime" />
+        <result column = "modifier" property = "modifier" />
+        <result column = "is_deleted" property = "isDeleted" />
+    </resultMap>
+
+    <sql id = "BASE_COLUMN_LIST">
+        id as id,
+        is_deleted as isDeleted,
+        create_time as createTime,
+        last_modify_time as lastModifyTime,
+        modifier as modifier,
+    </sql>
+
+    <sql id = "ALL_COLUMN_LIST">
+        *
+    </sql>
+
+    <sql id = "BASE_WHERE_CLAUSE">
+        <if test = "id != null">and id = #{id}</if>
+        <if test = "isDeleted != null">and is_deleted = #{isDeleted}</if>
+        <if test = "isDeleted == null">and is_deleted = 'N'</if>
+        <if test = "createTime != null">and create_time like CONCAT('%','${createTime}','%' )</if>  
+        <if test = "lastModifyTime != null">and last_modify_time = #{lastModifyTime}</if>
+        <if test = "modifier != null">and modifier = #{modifier}</if>
+    </sql>
+
+    <sql id = "BASE_UPDATE_SET">
+        <if test = "isDeleted != null and isDeleted != ''">
+            is_deleted=#{isDeleted},
+        </if>
+        <if test = "createTime != null and createTime != ''">
+            create_time=#{createTime},
+        </if>
+        <if test = "lastModifyTime != null and lastModifyTime != ''">
+            last_modify_time=#{lastModifyTime},
+        </if>
+        <if test = "modifier != null and modifier != ''">
+            modifier=#{modifier},
+        </if>
+    </sql>
+
+    <sql id = "BASE_INSERT_COLUMN">
+        is_deleted,
+        create_time,
+        last_modify_time,
+        modifier,
+    </sql>
+
+    <sql id = "BASE_INSERT_VALUE">
+        #{isDeleted},
+        #{createTime},
+        #{lastModifyTime},
+        #{modifier},
+    </sql>
+
+    <sql id = "ORDER_BY">
+        <if test = "sorts != null">
+            order by
+            <foreach collection = "sorts" item = "tag" separator = ",">
+                ${tag}
+            </foreach>
+        </if>
+    </sql>
+    <sql id = "LIMIT">
+        <if test = "offset != null and limit != null">
+            limit ${offset}, ${limit}
+        </if>
+        <if test = "offset == null or limit == null">
+            limit 10000
+        </if>
+    </sql>
+    <sql id = "PAGE">
+        <if test = "start != null and pageSize != null">
+            limit ${start}, ${pageSize}
+        </if>
+        <if test = "start == null or pageSize == null">
+            limit 10000
+        </if>
+    </sql>
+</mapper> 

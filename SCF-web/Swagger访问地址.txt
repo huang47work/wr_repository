@@ -1,0 +1,6 @@
+ Swagger1.0.2:
+ 			http://localhost:8080/SCF-web/swagger/index.html
+ 	
+暂用		
+Swagger 2.0:
+			http://localhost:8080/SCF-web/swagger-ui.html

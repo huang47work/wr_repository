@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.FinancialProductsMapper" >
+  <resultMap id="BaseResultMap" type="wr.com.pojo.FinancialProducts" >
+    <id column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="pledge_rate" property="pledgeRate" jdbcType="DOUBLE" />
+    <result column="interest_type" property="interestType" jdbcType="VARCHAR" />
+    <result column="interest_method" property="interestMethod" jdbcType="VARCHAR" />
+    <result column="balance_interest_method" property="balanceInterestMethod" jdbcType="VARCHAR" />
+    <result column="repayment_method" property="repaymentMethod" jdbcType="VARCHAR" />
+    <result column="product_limit_unit" property="productLimitUnit" jdbcType="VARCHAR" />
+    <result column="product_interest_rate" property="productInterestRate" jdbcType="DOUBLE" />
+    <result column="highest_limit" property="highestLimit" jdbcType="DOUBLE" />
+    <result column="product_kind_one" property="productKindOne" jdbcType="VARCHAR" />
+    <result column="product_kind_two" property="productKindTwo" jdbcType="VARCHAR" />
+    <result column="finance_user_id" property="financeUserId" jdbcType="VARCHAR" />
+    <result column="finance_user_Name" property="financeUserName" jdbcType="VARCHAR" />
+    <result column="product_limit" property="productLimit" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pid, id, product_name, pledge_rate, interest_type, interest_method, balance_interest_method, 
+    repayment_method, product_limit_unit, product_interest_rate, highest_limit, product_kind_one, 
+    product_kind_two, finance_user_id, finance_user_Name, product_limit
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wr_financial_products
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from wr_financial_products
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wr_financial_products
+    where pid = #{pid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="wr.com.pojo.FinancialProducts" >
+    insert into wr_financial_products (pid, id, product_name, 
+      pledge_rate, interest_type, interest_method, 
+      balance_interest_method, repayment_method, 
+      product_limit_unit, product_interest_rate, highest_limit, 
+      product_kind_one, product_kind_two, finance_user_id, 
+      finance_user_Name, product_limit)
+    values (#{pid,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, 
+      #{pledgeRate,jdbcType=DOUBLE}, #{interestType,jdbcType=VARCHAR}, #{interestMethod,jdbcType=VARCHAR}, 
+      #{balanceInterestMethod,jdbcType=VARCHAR}, #{repaymentMethod,jdbcType=VARCHAR}, 
+      #{productLimitUnit,jdbcType=VARCHAR}, #{productInterestRate,jdbcType=DOUBLE}, #{highestLimit,jdbcType=DOUBLE}, 
+      #{productKindOne,jdbcType=VARCHAR}, #{productKindTwo,jdbcType=VARCHAR}, #{financeUserId,jdbcType=VARCHAR}, 
+      #{financeUserName,jdbcType=VARCHAR}, #{productLimit,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="wr.com.pojo.FinancialProducts" >
+    insert into wr_financial_products
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="pledgeRate != null" >
+        pledge_rate,
+      </if>
+      <if test="interestType != null" >
+        interest_type,
+      </if>
+      <if test="interestMethod != null" >
+        interest_method,
+      </if>
+      <if test="balanceInterestMethod != null" >
+        balance_interest_method,
+      </if>
+      <if test="repaymentMethod != null" >
+        repayment_method,
+      </if>
+      <if test="productLimitUnit != null" >
+        product_limit_unit,
+      </if>
+      <if test="productInterestRate != null" >
+        product_interest_rate,
+      </if>
+      <if test="highestLimit != null" >
+        highest_limit,
+      </if>
+      <if test="productKindOne != null" >
+        product_kind_one,
+      </if>
+      <if test="productKindTwo != null" >
+        product_kind_two,
+      </if>
+      <if test="financeUserId != null" >
+        finance_user_id,
+      </if>
+      <if test="financeUserName != null" >
+        finance_user_Name,
+      </if>
+      <if test="productLimit != null" >
+        product_limit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="pledgeRate != null" >
+        #{pledgeRate,jdbcType=DOUBLE},
+      </if>
+      <if test="interestType != null" >
+        #{interestType,jdbcType=VARCHAR},
+      </if>
+      <if test="interestMethod != null" >
+        #{interestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="balanceInterestMethod != null" >
+        #{balanceInterestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentMethod != null" >
+        #{repaymentMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="productLimitUnit != null" >
+        #{productLimitUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="productInterestRate != null" >
+        #{productInterestRate,jdbcType=DOUBLE},
+      </if>
+      <if test="highestLimit != null" >
+        #{highestLimit,jdbcType=DOUBLE},
+      </if>
+      <if test="productKindOne != null" >
+        #{productKindOne,jdbcType=VARCHAR},
+      </if>
+      <if test="productKindTwo != null" >
+        #{productKindTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="financeUserId != null" >
+        #{financeUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="financeUserName != null" >
+        #{financeUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="productLimit != null" >
+        #{productLimit,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="wr.com.pojo.FinancialProducts" >
+    update wr_financial_products
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="pledgeRate != null" >
+        pledge_rate = #{pledgeRate,jdbcType=DOUBLE},
+      </if>
+      <if test="interestType != null" >
+        interest_type = #{interestType,jdbcType=VARCHAR},
+      </if>
+      <if test="interestMethod != null" >
+        interest_method = #{interestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="balanceInterestMethod != null" >
+        balance_interest_method = #{balanceInterestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentMethod != null" >
+        repayment_method = #{repaymentMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="productLimitUnit != null" >
+        product_limit_unit = #{productLimitUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="productInterestRate != null" >
+        product_interest_rate = #{productInterestRate,jdbcType=DOUBLE},
+      </if>
+      <if test="highestLimit != null" >
+        highest_limit = #{highestLimit,jdbcType=DOUBLE},
+      </if>
+      <if test="productKindOne != null" >
+        product_kind_one = #{productKindOne,jdbcType=VARCHAR},
+      </if>
+      <if test="productKindTwo != null" >
+        product_kind_two = #{productKindTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="financeUserId != null" >
+        finance_user_id = #{financeUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="financeUserName != null" >
+        finance_user_Name = #{financeUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="productLimit != null" >
+        product_limit = #{productLimit,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wr.com.pojo.FinancialProducts" >
+    update wr_financial_products
+    set id = #{id,jdbcType=INTEGER},
+      product_name = #{productName,jdbcType=VARCHAR},
+      pledge_rate = #{pledgeRate,jdbcType=DOUBLE},
+      interest_type = #{interestType,jdbcType=VARCHAR},
+      interest_method = #{interestMethod,jdbcType=VARCHAR},
+      balance_interest_method = #{balanceInterestMethod,jdbcType=VARCHAR},
+      repayment_method = #{repaymentMethod,jdbcType=VARCHAR},
+      product_limit_unit = #{productLimitUnit,jdbcType=VARCHAR},
+      product_interest_rate = #{productInterestRate,jdbcType=DOUBLE},
+      highest_limit = #{highestLimit,jdbcType=DOUBLE},
+      product_kind_one = #{productKindOne,jdbcType=VARCHAR},
+      product_kind_two = #{productKindTwo,jdbcType=VARCHAR},
+      finance_user_id = #{financeUserId,jdbcType=VARCHAR},
+      finance_user_Name = #{financeUserName,jdbcType=VARCHAR},
+      product_limit = #{productLimit,jdbcType=DOUBLE}
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+</mapper>

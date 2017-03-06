@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.WrAgreementMapper">
+	<resultMap id="BaseResultMap" type="wr.com.pojo.WrAgreement"
+		extends="COMMON.BASE_RESULT_MAP">
+		<result column="agreement_num" property="agreementNum"
+			jdbcType="VARCHAR" />
+		<result column="agreement_name" property="agreementName"
+			jdbcType="VARCHAR" />
+		<result column="sign_date" property="signDate" jdbcType="DATE" />
+		<result column="financing_type" property="financingType"
+			jdbcType="INTEGER" />
+		<result column="apply_company" property="applyCompany"
+			jdbcType="VARCHAR" />
+		<result column="lender" property="lender" jdbcType="VARCHAR" />
+		<result column="core_company" property="coreCompany" jdbcType="VARCHAR" />
+		<result column="platform" property="platform" jdbcType="VARCHAR" />
+		<result column="financing_amount" property="financingAmount"
+			jdbcType="DECIMAL" />
+		<result column="start_date" property="startDate" jdbcType="DATE" />
+		<result column="end_date" property="endDate" jdbcType="DATE" />
+		<result column="sub_agreement_num" property="subAgreementNum"
+			jdbcType="VARCHAR" />
+		<result column="bl_year_interest_rate" property="blYearInterestRate"
+			jdbcType="DECIMAL" />
+		<result column="bl_overdue_interest_rate" property="blOverdueInterestRate"
+			jdbcType="DECIMAL" />
+		<result column="bl_repayment" property="blRepayment" jdbcType="VARCHAR" />
+		<result column="bl_repayment_account" property="blRepaymentAccount"
+			jdbcType="VARCHAR" />
+		<result column="bl_repayment_bank" property="blRepaymentBank"
+			jdbcType="VARCHAR" />
+		<result column="bl_repayment_branch_bank" property="blRepaymentBranchBank"
+			jdbcType="VARCHAR" />
+		<result column="pledge_rate" property="pledgeRate" jdbcType="DECIMAL" />
+		<result column="zy_year_interest_rate" property="zyYearInterestRate"
+			jdbcType="DECIMAL" />
+		<result column="zy_overdue_interest_rate" property="zyOverdueInterestRate"
+			jdbcType="DECIMAL" />
+		<result column="zy_repayment" property="zyRepayment" jdbcType="VARCHAR" />
+		<result column="zy_repayment_account" property="zyRepaymentAccount"
+			jdbcType="VARCHAR" />
+		<result column="zy_repayment_bank" property="zyRepaymentBank"
+			jdbcType="VARCHAR" />
+		<result column="zy_repayment_branch_bank" property="zyRepaymentBranchBank"
+			jdbcType="VARCHAR" />
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+		<result column="is_approval" property="isApproval" jdbcType="CHAR" />
+		<result column="invoice_must" property="invoiceMust" jdbcType="CHAR" />
+		<result column="bl_checked" property="blChecked" jdbcType="INTEGER" />
+		<result column="zy_checked" property="zyChecked" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="max_date" property="maxDate" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, modifier, create_time, last_modify_time, is_deleted,
+		agreement_num, agreement_name,
+		sign_date, financing_type,
+		apply_company, lender, core_company, platform,
+		financing_amount,
+		start_date, end_date, sub_agreement_num, bl_year_interest_rate,
+		bl_overdue_interest_rate,
+		bl_repayment, bl_repayment_account,
+		bl_repayment_bank, bl_repayment_branch_bank,
+		pledge_rate,
+		zy_year_interest_rate, zy_overdue_interest_rate,
+		zy_repayment,
+		zy_repayment_account,
+		zy_repayment_bank, zy_repayment_branch_bank,
+		img_url, is_approval, invoice_must,
+		bl_checked, zy_checked, status,
+		remark, max_date
+	</sql>
+
+	<!-- 查询条件 -->
+	<sql id="BaseWhereClause">
+		<where>
+			<trim prefixOverrides="and">
+				<include refid="COMMON.BASE_WHERE_CLAUSE" />
+				<if test="agreementNum != null">
+					and agreement_num = #{agreementNum,jdbcType=VARCHAR}
+				</if>
+				<if test="agreementName != null">
+					and agreement_name = #{agreementName,jdbcType=VARCHAR}
+				</if>
+				<if test="status != null">
+					and status = #{status,jdbcType=CHAR}
+				</if>
+				<if test="financingType != null">
+					and financing_type = #{financingType,jdbcType=INTEGER}
+				</if>
+				<if test="lender != null">
+					and lender = #{lender,jdbcType=VARCHAR}
+				</if>
+				<if test="applyCompany != null">
+					and apply_company = #{applyCompany,jdbcType=VARCHAR}
+				</if>
+				<if test="blRepayment != null">
+					and (zy_repayment = #{blRepayment,jdbcType=VARCHAR} or
+					bl_repayment = #{blRepayment,jdbcType=VARCHAR})
+				</if>
+				<if test="signStartDay != null and signEndDay != null">
+					and sign_date between #{signStartDay} and #{signEndDay}
+				</if>
+			</trim>
+		</where>
+	</sql>
+	<!-- 根据Id查询 -->
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from wr_agreement
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<!-- 根据金融机构名字查询 -->
+	<select id="selectByFName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from
+		wr_agreement
+		where
+		lender = #{lender,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 查询总数 -->
+	<select id="selectCount" resultType="java.lang.Integer">
+		select count(id)
+		from wr_agreement
+		<include refid="BaseWhereClause" />
+	</select>
+	<!-- 根据param 查询 -->
+	<!-- 根据金融机构名字,申请人和融资类型 查询 -->
+	<select id="select" resultMap="BaseResultMap" parameterType="wr.com.pojo.WrAgreement">
+		select
+		<include refid="Base_Column_List" />
+		from wr_agreement
+		<include refid="BaseWhereClause" />
+		order by create_time DESC
+	</select>
+	<!-- 根据IDs查询列表 -->
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from wr_agreement
+		where id in
+		(
+		<foreach collection="array" index="index" item="tag"
+			separator=",">
+			#{tag}
+		</foreach>
+		)
+	</select>
+	<!-- 根据ID 删除 -->
+	<update id="deleteById" parameterType="java.lang.Integer">
+		update wr_agreement
+		set
+		is_deleted='Y'
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<!-- 根据IDS批量删除 数组:[1,2,3] -->
+	<update id="deleteByIds">
+		update wr_agreement
+		set is_deleted='Y'
+		where id in
+		(
+		<foreach collection="array" index="index" item="tag"
+			separator=",">
+			#{tag}
+		</foreach>
+		)
+	</update>
+	<insert id="insert" parameterType="wr.com.pojo.WrAgreement">
+		insert into wr_agreement (id,
+		modifier, create_time,
+		last_modify_time, is_deleted, agreement_num,
+		agreement_name, sign_date, financing_type,
+		apply_company, lender,
+		core_company,
+		platform, financing_amount, start_date,
+		end_date,
+		sub_agreement_num, bl_year_interest_rate,
+		bl_overdue_interest_rate,
+		bl_repayment, bl_repayment_account,
+		bl_repayment_bank,
+		bl_repayment_branch_bank,
+		pledge_rate, zy_year_interest_rate,
+		zy_overdue_interest_rate,
+		zy_repayment, zy_repayment_account,
+		zy_repayment_bank,
+		zy_repayment_branch_bank, img_url, is_approval,
+		invoice_must, bl_checked, zy_checked,
+		status, remark, max_date
+		)
+		values
+		(#{id,jdbcType=INTEGER}, #{modifier,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{lastModifyTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=CHAR},
+		#{agreementNum,jdbcType=VARCHAR},
+		#{agreementName,jdbcType=VARCHAR},
+		#{signDate,jdbcType=DATE}, #{financingType,jdbcType=INTEGER},
+		#{applyCompany,jdbcType=VARCHAR}, #{lender,jdbcType=VARCHAR},
+		#{coreCompany,jdbcType=VARCHAR},
+		#{platform,jdbcType=VARCHAR},
+		#{financingAmount,jdbcType=DECIMAL}, #{startDate,jdbcType=DATE},
+		#{endDate,jdbcType=DATE}, #{subAgreementNum,jdbcType=VARCHAR},
+		#{blYearInterestRate,jdbcType=DECIMAL},
+		#{blOverdueInterestRate,jdbcType=DECIMAL},
+		#{blRepayment,jdbcType=VARCHAR},
+		#{blRepaymentAccount,jdbcType=VARCHAR},
+		#{blRepaymentBank,jdbcType=VARCHAR},
+		#{blRepaymentBranchBank,jdbcType=VARCHAR},
+		#{pledgeRate,jdbcType=DECIMAL},
+		#{zyYearInterestRate,jdbcType=DECIMAL},
+		#{zyOverdueInterestRate,jdbcType=DECIMAL},
+		#{zyRepayment,jdbcType=VARCHAR},
+		#{zyRepaymentAccount,jdbcType=VARCHAR},
+		#{zyRepaymentBank,jdbcType=VARCHAR},
+		#{zyRepaymentBranchBank,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR},
+		#{isApproval,jdbcType=CHAR},
+		#{invoiceMust,jdbcType=CHAR},
+		#{blChecked,jdbcType=INTEGER}, #{zyChecked,jdbcType=INTEGER},
+		#{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},
+		#{maxDate,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelected" parameterType="wr.com.pojo.WrAgreement">
+		insert into wr_agreement
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="modifier != null">
+				modifier,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastModifyTime != null">
+				last_modify_time,
+			</if>
+			<if test="isDeleted != null">
+				is_deleted,
+			</if>
+			<if test="agreementNum != null">
+				agreement_num,
+			</if>
+			<if test="agreementName != null">
+				agreement_name,
+			</if>
+			<if test="signDate != null">
+				sign_date,
+			</if>
+			<if test="financingType != null">
+				financing_type,
+			</if>
+			<if test="applyCompany != null">
+				apply_company,
+			</if>
+			<if test="lender != null">
+				lender,
+			</if>
+			<if test="coreCompany != null">
+				core_company,
+			</if>
+			<if test="platform != null">
+				platform,
+			</if>
+			<if test="financingAmount != null">
+				financing_amount,
+			</if>
+			<if test="startDate != null">
+				start_date,
+			</if>
+			<if test="endDate != null">
+				end_date,
+			</if>
+			<if test="subAgreementNum != null">
+				sub_agreement_num,
+			</if>
+			<if test="blYearInterestRate != null">
+				bl_year_interest_rate,
+			</if>
+			<if test="blOverdueInterestRate != null">
+				bl_overdue_interest_rate,
+			</if>
+			<if test="blRepayment != null">
+				bl_repayment,
+			</if>
+			<if test="blRepaymentAccount != null">
+				bl_repayment_account,
+			</if>
+			<if test="blRepaymentBank != null">
+				bl_repayment_bank,
+			</if>
+			<if test="blRepaymentBranchBank != null">
+				bl_repayment_branch_bank,
+			</if>
+			<if test="pledgeRate != null">
+				pledge_rate,
+			</if>
+			<if test="zyYearInterestRate != null">
+				zy_year_interest_rate,
+			</if>
+			<if test="zyOverdueInterestRate != null">
+				zy_overdue_interest_rate,
+			</if>
+			<if test="zyRepayment != null">
+				zy_repayment,
+			</if>
+			<if test="zyRepaymentAccount != null">
+				zy_repayment_account,
+			</if>
+			<if test="zyRepaymentBank != null">
+				zy_repayment_bank,
+			</if>
+			<if test="zyRepaymentBranchBank != null">
+				zy_repayment_branch_bank,
+			</if>
+			<if test="imgUrl != null">
+				img_url,
+			</if>
+			<if test="isApproval != null">
+				is_approval,
+			</if>
+			<if test="invoiceMust != null">
+				invoice_must,
+			</if>
+			<if test="blChecked != null">
+				bl_checked,
+			</if>
+			<if test="zyChecked != null">
+				zy_checked,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="maxDate != null">
+				max_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="modifier != null">
+				#{modifier,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModifyTime != null">
+				#{lastModifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isDeleted != null">
+				#{isDeleted,jdbcType=CHAR},
+			</if>
+			<if test="agreementNum != null">
+				#{agreementNum,jdbcType=VARCHAR},
+			</if>
+			<if test="agreementName != null">
+				#{agreementName,jdbcType=VARCHAR},
+			</if>
+			<if test="signDate != null">
+				#{signDate,jdbcType=DATE},
+			</if>
+			<if test="financingType != null">
+				#{financingType,jdbcType=INTEGER},
+			</if>
+			<if test="applyCompany != null">
+				#{applyCompany,jdbcType=VARCHAR},
+			</if>
+			<if test="lender != null">
+				#{lender,jdbcType=VARCHAR},
+			</if>
+			<if test="coreCompany != null">
+				#{coreCompany,jdbcType=VARCHAR},
+			</if>
+			<if test="platform != null">
+				#{platform,jdbcType=VARCHAR},
+			</if>
+			<if test="financingAmount != null">
+				#{financingAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="startDate != null">
+				#{startDate,jdbcType=DATE},
+			</if>
+			<if test="endDate != null">
+				#{endDate,jdbcType=DATE},
+			</if>
+			<if test="subAgreementNum != null">
+				#{subAgreementNum,jdbcType=VARCHAR},
+			</if>
+			<if test="blYearInterestRate != null">
+				#{blYearInterestRate,jdbcType=DECIMAL},
+			</if>
+			<if test="blOverdueInterestRate != null">
+				#{blOverdueInterestRate,jdbcType=DECIMAL},
+			</if>
+			<if test="blRepayment != null">
+				#{blRepayment,jdbcType=VARCHAR},
+			</if>
+			<if test="blRepaymentAccount != null">
+				#{blRepaymentAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="blRepaymentBank != null">
+				#{blRepaymentBank,jdbcType=VARCHAR},
+			</if>
+			<if test="blRepaymentBranchBank != null">
+				#{blRepaymentBranchBank,jdbcType=VARCHAR},
+			</if>
+			<if test="pledgeRate != null">
+				#{pledgeRate,jdbcType=DECIMAL},
+			</if>
+			<if test="zyYearInterestRate != null">
+				#{zyYearInterestRate,jdbcType=DECIMAL},
+			</if>
+			<if test="zyOverdueInterestRate != null">
+				#{zyOverdueInterestRate,jdbcType=DECIMAL},
+			</if>
+			<if test="zyRepayment != null">
+				#{zyRepayment,jdbcType=VARCHAR},
+			</if>
+			<if test="zyRepaymentAccount != null">
+				#{zyRepaymentAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="zyRepaymentBank != null">
+				#{zyRepaymentBank,jdbcType=VARCHAR},
+			</if>
+			<if test="zyRepaymentBranchBank != null">
+				#{zyRepaymentBranchBank,jdbcType=VARCHAR},
+			</if>
+			<if test="imgUrl != null">
+				#{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="isApproval != null">
+				#{isApproval,jdbcType=CHAR},
+			</if>
+			<if test="invoiceMust != null">
+				#{invoiceMust,jdbcType=CHAR},
+			</if>
+			<if test="blChecked != null">
+				#{blChecked,jdbcType=INTEGER},
+			</if>
+			<if test="zyChecked != null">
+				#{zyChecked,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="maxDate != null">
+				#{maxDate,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateById" parameterType="wr.com.pojo.WrAgreement">
+		update wr_agreement
+		<set>
+			<if test="modifier != null">
+				modifier = #{modifier,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModifyTime != null">
+				last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isDeleted != null">
+				is_deleted = #{isDeleted,jdbcType=CHAR},
+			</if>
+			<if test="agreementNum != null">
+				agreement_num = #{agreementNum,jdbcType=VARCHAR},
+			</if>
+			<if test="agreementName != null">
+				agreement_name = #{agreementName,jdbcType=VARCHAR},
+			</if>
+			<if test="signDate != null">
+				sign_date = #{signDate,jdbcType=DATE},
+			</if>
+			<if test="financingType != null">
+				financing_type = #{financingType,jdbcType=INTEGER},
+			</if>
+			<if test="applyCompany != null">
+				apply_company = #{applyCompany,jdbcType=VARCHAR},
+			</if>
+			<if test="lender != null">
+				lender = #{lender,jdbcType=VARCHAR},
+			</if>
+			<if test="coreCompany != null">
+				core_company = #{coreCompany,jdbcType=VARCHAR},
+			</if>
+			<if test="platform != null">
+				platform = #{platform,jdbcType=VARCHAR},
+			</if>
+			<if test="financingAmount != null">
+				financing_amount = #{financingAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="startDate != null">
+				start_date = #{startDate,jdbcType=DATE},
+			</if>
+			<if test="endDate != null">
+				end_date = #{endDate,jdbcType=DATE},
+			</if>
+			<if test="subAgreementNum != null">
+				sub_agreement_num = #{subAgreementNum,jdbcType=VARCHAR},
+			</if>
+			<if test="blYearInterestRate != null">
+				bl_year_interest_rate = #{blYearInterestRate,jdbcType=DECIMAL},
+			</if>
+			<if test="blOverdueInterestRate != null">
+				bl_overdue_interest_rate = #{blOverdueInterestRate,jdbcType=DECIMAL},
+			</if>
+			<if test="blRepayment != null">
+				bl_repayment = #{blRepayment,jdbcType=VARCHAR},
+			</if>
+			<if test="blRepaymentAccount != null">
+				bl_repayment_account = #{blRepaymentAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="blRepaymentBank != null">
+				bl_repayment_bank = #{blRepaymentBank,jdbcType=VARCHAR},
+			</if>
+			<if test="blRepaymentBranchBank != null">
+				bl_repayment_branch_bank = #{blRepaymentBranchBank,jdbcType=VARCHAR},
+			</if>
+			<if test="pledgeRate != null">
+				pledge_rate = #{pledgeRate,jdbcType=DECIMAL},
+			</if>
+			<if test="zyYearInterestRate != null">
+				zy_year_interest_rate = #{zyYearInterestRate,jdbcType=DECIMAL},
+			</if>
+			<if test="zyOverdueInterestRate != null">
+				zy_overdue_interest_rate = #{zyOverdueInterestRate,jdbcType=DECIMAL},
+			</if>
+			<if test="zyRepayment != null">
+				zy_repayment = #{zyRepayment,jdbcType=VARCHAR},
+			</if>
+			<if test="zyRepaymentAccount != null">
+				zy_repayment_account = #{zyRepaymentAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="zyRepaymentBank != null">
+				zy_repayment_bank = #{zyRepaymentBank,jdbcType=VARCHAR},
+			</if>
+			<if test="zyRepaymentBranchBank != null">
+				zy_repayment_branch_bank = #{zyRepaymentBranchBank,jdbcType=VARCHAR},
+			</if>
+			<if test="imgUrl != null">
+				img_url = #{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="isApproval != null">
+				is_approval = #{isApproval,jdbcType=CHAR},
+			</if>
+			<if test="invoiceMust != null">
+				invoice_must = #{invoiceMust,jdbcType=CHAR},
+			</if>
+			<if test="blChecked != null">
+				bl_checked = #{blChecked,jdbcType=INTEGER},
+			</if>
+			<if test="zyChecked != null">
+				zy_checked = #{zyChecked,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="maxDate != null">
+				max_date = #{maxDate,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="wr.com.pojo.WrAgreement">
+		update
+		wr_agreement
+		set modifier = #{modifier,jdbcType=INTEGER},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+		is_deleted = #{isDeleted,jdbcType=CHAR},
+		agreement_num = #{agreementNum,jdbcType=VARCHAR},
+		agreement_name = #{agreementName,jdbcType=VARCHAR},
+		sign_date = #{signDate,jdbcType=DATE},
+		financing_type = #{financingType,jdbcType=INTEGER},
+		apply_company = #{applyCompany,jdbcType=VARCHAR},
+		lender = #{lender,jdbcType=VARCHAR},
+		core_company = #{coreCompany,jdbcType=VARCHAR},
+		platform = #{platform,jdbcType=VARCHAR},
+		financing_amount = #{financingAmount,jdbcType=DECIMAL},
+		start_date = #{startDate,jdbcType=DATE},
+		end_date = #{endDate,jdbcType=DATE},
+		sub_agreement_num = #{subAgreementNum,jdbcType=VARCHAR},
+		bl_year_interest_rate = #{blYearInterestRate,jdbcType=DECIMAL},
+		bl_overdue_interest_rate = #{blOverdueInterestRate,jdbcType=DECIMAL},
+		bl_repayment = #{blRepayment,jdbcType=VARCHAR},
+		bl_repayment_account = #{blRepaymentAccount,jdbcType=VARCHAR},
+		bl_repayment_bank = #{blRepaymentBank,jdbcType=VARCHAR},
+		bl_repayment_branch_bank = #{blRepaymentBranchBank,jdbcType=VARCHAR},
+		pledge_rate = #{pledgeRate,jdbcType=DECIMAL},
+		zy_year_interest_rate = #{zyYearInterestRate,jdbcType=DECIMAL},
+		zy_overdue_interest_rate = #{zyOverdueInterestRate,jdbcType=DECIMAL},
+		zy_repayment = #{zyRepayment,jdbcType=VARCHAR},
+		zy_repayment_account = #{zyRepaymentAccount,jdbcType=VARCHAR},
+		zy_repayment_bank = #{zyRepaymentBank,jdbcType=VARCHAR},
+		zy_repayment_branch_bank = #{zyRepaymentBranchBank,jdbcType=VARCHAR},
+		img_url = #{imgUrl,jdbcType=VARCHAR},
+		is_approval = #{isApproval,jdbcType=CHAR},
+		invoice_must = #{invoiceMust,jdbcType=CHAR},
+		bl_checked = #{blChecked,jdbcType=INTEGER},
+		zy_checked = #{zyChecked,jdbcType=INTEGER},
+		status = #{status,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR},
+		max_date = #{maxDate,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

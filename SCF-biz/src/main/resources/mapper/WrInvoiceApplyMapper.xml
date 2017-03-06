@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.WrInvoiceApplyMapper">
+	<resultMap id="BaseResultMap" type="wr.com.pojo.WrInvoiceApply"
+		extends="COMMON.BASE_RESULT_MAP">
+		<result column="invoice_group_num" property="invoiceGroupNum"
+			jdbcType="VARCHAR" />
+		<result column="invoice_num" property="invoiceNum" jdbcType="VARCHAR" />
+		<result column="entry_id" property="entryId" jdbcType="VARCHAR" />
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+		<result column="payment_day" property="paymentDay" jdbcType="DATE" />
+		<result column="buyer" property="buyer" jdbcType="VARCHAR" />
+		<result column="seller" property="seller" jdbcType="VARCHAR" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+		<result column="advice" property="advice" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, modifier, create_time, last_modify_time, is_deleted,
+		invoice_group_num, invoice_num,
+		entry_id, img_url, payment_day, buyer,
+		seller, amount, advice, status, remark
+	</sql>
+	<!-- 查询条件 -->
+	<sql id="BaseWhereClause">
+		<where>
+			<trim prefixOverrides="and">
+				<include refid="COMMON.BASE_WHERE_CLAUSE" />
+				<if test="invoiceNum != null">
+					and invoice_num = #{invoiceNum,jdbcType=VARCHAR}
+				</if>
+				<if test="invoiceGroupNum != null">
+					and invoice_group_num =
+					#{invoiceGroupNum,jdbcType=VARCHAR}
+				</if>
+				<if test="status != null">
+					and status = #{status,jdbcType=INTEGER}
+				</if>
+				<if test="entryId != null">
+					and entry_id = #{entryId,jdbcType=VARCHAR}
+				</if>
+				<if test="endDay != null">
+					<![CDATA[ and create_time  <=  #{endDay}  ]]>
+				</if>
+				<if test="startDay != null">
+				<![CDATA[ and create_time  >=  #{startDay}  ]]>
+				</if>
+				
+				<if test="buyer != null">
+					and buyer = #{buyer,jdbcType=VARCHAR}
+				</if>
+			</trim>
+		</where>
+	</sql>
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from wr_invoice_apply
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<!-- 查询总数 -->
+	<select id="selectCount" resultType="java.lang.Integer">
+		select count(id)
+		from wr_invoice_apply
+		<include refid="BaseWhereClause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''">
+			${pager.orderCondition}
+		</if>
+		<if
+			test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+			${pager.mysqlQueryCondition}
+		</if>
+	</select>
+	<!-- 根据IDs查询列表 -->
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from wr_invoice_apply
+		where id in
+		(
+		<foreach collection="array" index="index" item="tag"
+			separator=",">
+			#{tag}
+		</foreach>
+		)
+	</select>
+	<!-- 根据param 查询 -->
+	<select id="select" resultMap="BaseResultMap" parameterType="wr.com.pojo.WrInvoice">
+		select
+		<include refid="Base_Column_List" />
+		from wr_invoice_apply
+		<include refid="BaseWhereClause" />
+		order by create_time DESC
+		<!-- <if test="pager.orderCondition != null and pager.orderCondition != ''">
+			${pager.orderCondition}
+		</if>
+		<if
+			test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+			${pager.mysqlQueryCondition}
+		</if> -->
+	</select>
+	<!-- 根据ID 删除 -->
+	<update id="deleteById" parameterType="java.lang.Integer">
+		update wr_invoice_apply
+		set
+		is_deleted='Y'
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<!-- 根据IDS批量删除 数组:[1,2,3] -->
+	<update id="deleteByIds">
+		update wr_invoice_apply
+		set is_deleted='Y'
+		where id in
+		(
+		<foreach collection="array" index="index" item="tag"
+			separator=",">
+			#{tag}
+		</foreach>
+		)
+	</update>
+	<insert id="insert" parameterType="wr.com.pojo.WrInvoiceApply">
+		insert into wr_invoice_apply
+		(id, modifier, create_time,
+		last_modify_time, is_deleted,
+		invoice_group_num,
+		invoice_num, entry_id, img_url,
+		payment_day, buyer,
+		seller,
+		amount, advice, status,
+		remark)
+		values (#{id,jdbcType=INTEGER},
+		#{modifier,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{lastModifyTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=CHAR},
+		#{invoiceGroupNum,jdbcType=VARCHAR},
+		#{invoiceNum,jdbcType=VARCHAR},
+		#{entryId,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR},
+		#{paymentDay,jdbcType=DATE}, #{buyer,jdbcType=VARCHAR},
+		#{seller,jdbcType=VARCHAR},
+		#{amount,jdbcType=DECIMAL},
+		#{advice,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+		#{remark,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="wr.com.pojo.WrInvoiceApply">
+		insert into wr_invoice_apply
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="modifier != null">
+				modifier,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastModifyTime != null">
+				last_modify_time,
+			</if>
+			<if test="isDeleted != null">
+				is_deleted,
+			</if>
+			<if test="invoiceGroupNum != null">
+				invoice_group_num,
+			</if>
+			<if test="invoiceNum != null">
+				invoice_num,
+			</if>
+			<if test="entryId != null">
+				entry_id,
+			</if>
+			<if test="imgUrl != null">
+				img_url,
+			</if>
+			<if test="paymentDay != null">
+				payment_day,
+			</if>
+			<if test="buyer != null">
+				buyer,
+			</if>
+			<if test="seller != null">
+				seller,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+			<if test="advice != null">
+				advice,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="modifier != null">
+				#{modifier,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModifyTime != null">
+				#{lastModifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isDeleted != null">
+				#{isDeleted,jdbcType=CHAR},
+			</if>
+			<if test="invoiceGroupNum != null">
+				#{invoiceGroupNum,jdbcType=VARCHAR},
+			</if>
+			<if test="invoiceNum != null">
+				#{invoiceNum,jdbcType=VARCHAR},
+			</if>
+			<if test="entryId != null">
+				#{entryId,jdbcType=VARCHAR},
+			</if>
+			<if test="imgUrl != null">
+				#{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="paymentDay != null">
+				#{paymentDay,jdbcType=DATE},
+			</if>
+			<if test="buyer != null">
+				#{buyer,jdbcType=VARCHAR},
+			</if>
+			<if test="seller != null">
+				#{seller,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="advice != null">
+				#{advice,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateById" parameterType="wr.com.pojo.WrInvoiceApply">
+		update wr_invoice_apply
+		<set>
+			<if test="modifier != null">
+				modifier = #{modifier,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModifyTime != null">
+				last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isDeleted != null">
+				is_deleted = #{isDeleted,jdbcType=CHAR},
+			</if>
+			<if test="invoiceNum != null">
+				invoice_num = #{invoiceNum,jdbcType=VARCHAR},
+			</if>
+			<if test="entryId != null">
+				entry_id = #{entryId,jdbcType=VARCHAR},
+			</if>
+			<if test="imgUrl != null">
+				img_url = #{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="paymentDay != null">
+				payment_day = #{paymentDay,jdbcType=DATE},
+			</if>
+			<if test="buyer != null">
+				buyer = #{buyer,jdbcType=VARCHAR},
+			</if>
+			<if test="seller != null">
+				seller = #{seller,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				amount = #{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="advice != null">
+				advice = #{advice,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{invoiceGroupNum,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="wr.com.pojo.WrInvoiceApply">
+		update
+		wr_invoice_apply
+		set modifier = #{modifier,jdbcType=INTEGER},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		last_modify_time =
+		#{lastModifyTime,jdbcType=TIMESTAMP},
+		is_deleted =
+		#{isDeleted,jdbcType=CHAR},
+		invoice_group_num =
+		#{invoiceGroupNum,jdbcType=VARCHAR},
+		invoice_num =
+		#{invoiceNum,jdbcType=VARCHAR},
+		entry_id = #{entryId,jdbcType=VARCHAR},
+		img_url = #{imgUrl,jdbcType=VARCHAR},
+		payment_day =
+		#{paymentDay,jdbcType=DATE},
+		buyer = #{buyer,jdbcType=VARCHAR},
+		seller =
+		#{seller,jdbcType=VARCHAR},
+		amount = #{amount,jdbcType=DECIMAL},
+		advice
+		= #{advice,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

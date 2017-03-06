@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.WrRepayBackMapper">
+	<resultMap id="BaseResultMap" type="wr.com.pojo.WrRepayBack">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="modifier" property="modifier" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_modify_time" property="lastModifyTime"
+			jdbcType="TIMESTAMP" />
+		<result column="is_deleted" property="isDeleted" jdbcType="CHAR" />
+		<result column="repay_id" property="repayId" jdbcType="INTEGER" />
+		<result column="borrow_id" property="borrowId" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, modifier, create_time, last_modify_time, is_deleted,
+		repay_id,
+		borrow_id, user_id,
+		remark
+	</sql>
+	<sql id="BaseWhereClause">
+		<where>
+			<trim prefixOverrides="and">
+				<include refid="COMMON.BASE_WHERE_CLAUSE" />
+				<if test="borrowId != null">
+					and borrow_id = #{borrowId,jdbcType=INTEGER}
+				</if>
+				<if test="userId != null">
+					and user_id = #{userId,jdbcType=INTEGER}
+				</if>
+				<if test="repayId != null">
+					and repay_id = #{repayId,jdbcType=INTEGER}
+				</if>
+			</trim>
+		</where>
+	</sql>
+	<!-- 根据ID 查询 -->
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from wr_repayment_back
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<!-- 查询总数 -->
+	<select id="selectCount" resultType="java.lang.Integer">
+		select count(id)
+		from wr_repayment_back
+		<include refid="BaseWhereClause" />
+	</select>
+	<!-- 根据param 查询 -->
+	<select id="select" resultMap="BaseResultMap" parameterType="wr.com.pojo.WrRBInfo">
+		select
+		<include refid="Base_Column_List" />
+		from wr_repayment_back
+		<include refid="BaseWhereClause" />
+	</select>
+	<!-- 根据ID删除 -->
+	<update id="deleteById" parameterType="java.lang.Integer">
+		update wr_repayment_back
+        set is_deleted='Y'
+        where id = #{id,jdbcType=INTEGER}
+	</update>
+	 <!-- 根据IDS批量删除 -->
+    <update id = "deleteByIds">
+        update wr_repayment_back
+        set is_deleted='Y'
+        where id in
+        (
+        <foreach collection = "array" index = "index" item = "tag" separator = ",">
+            #{tag}
+        </foreach>
+        )
+    </update>
+	<insert id="insert" parameterType="wr.com.pojo.WrRepayBack">
+		insert into wr_repayment_back
+		(id, modifier, create_time,
+		last_modify_time, is_deleted, repay_id,
+		borrow_id, user_id, remark
+		)
+		values (#{id,jdbcType=INTEGER},
+		#{modifier,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{lastModifyTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=CHAR},
+		#{repayId,jdbcType=INTEGER},
+		#{borrowId,jdbcType=INTEGER},
+		#{userId,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="wr.com.pojo.WrRepayBack">
+		insert into wr_repayment_back
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="modifier != null">
+				modifier,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastModifyTime != null">
+				last_modify_time,
+			</if>
+			<if test="isDeleted != null">
+				is_deleted,
+			</if>
+			<if test="repayId != null">
+				repay_id,
+			</if>
+			<if test="borrowId != null">
+				borrow_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="modifier != null">
+				#{modifier,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModifyTime != null">
+				#{lastModifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isDeleted != null">
+				#{isDeleted,jdbcType=CHAR},
+			</if>
+			<if test="repayId != null">
+				#{repayId,jdbcType=INTEGER},
+			</if>
+			<if test="borrowId != null">
+				#{borrowId,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="wr.com.pojo.WrRepayBack">
+		update wr_repayment_back
+		<set>
+			<if test="modifier != null">
+				modifier = #{modifier,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModifyTime != null">
+				last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isDeleted != null">
+				is_deleted = #{isDeleted,jdbcType=CHAR},
+			</if>
+			<if test="repayId != null">
+				repay_id = #{repayId,jdbcType=INTEGER},
+			</if>
+			<if test="borrowId != null">
+				borrow_id = #{borrowId,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="wr.com.pojo.WrRepayBack">
+		update
+		wr_repayment_back
+		set modifier = #{modifier,jdbcType=INTEGER},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		last_modify_time =
+		#{lastModifyTime,jdbcType=TIMESTAMP},
+		is_deleted =
+		#{isDeleted,jdbcType=CHAR},
+		repay_id = #{repayId,jdbcType=INTEGER},
+		borrow_id = #{borrowId,jdbcType=INTEGER},
+		user_id =
+		#{userId,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR}
+		where id
+		= #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

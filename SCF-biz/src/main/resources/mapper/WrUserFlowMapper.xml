@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.WrUserFlowMapper">
+	<resultMap id="BaseResultMap" type="wr.com.pojo.WrUserFlow"
+		extends="COMMON.BASE_RESULT_MAP">
+		<result column="history_id" property="historyId" jdbcType="INTEGER" />
+		<result column="repay_amount" property="repayAmount" jdbcType="DECIMAL" />
+		<result column="rest_amount" property="restAmount" jdbcType="DECIMAL" />
+		<result column="repay_id" property="repayId" jdbcType="INTEGER" />
+		<result column="fund_type" property="fundType" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, modifier, create_time, last_modify_time, is_deleted,
+		history_id,
+		repay_amount,
+		rest_amount, repay_id, fund_type, remark
+	</sql>
+	<sql id="BaseWhereClause">
+		<where>
+			<trim prefixOverrides="and">
+				<include refid="COMMON.BASE_WHERE_CLAUSE" />
+				<if test="historyId != null">
+					and history_id = #{historyId,jdbcType=INTEGER}
+				</if>
+				<if test="repayAmount != null">
+					and repay_amount = #{repayAmount,jdbcType=DECIMAL}
+				</if>
+				<if test="restAmount != null">
+					and rest_amount = #{restAmount,jdbcType=DECIMAL}
+				</if>
+				<if test="repayId != null">
+					and repay_id = #{repayId,jdbcType=INTEGER}
+				</if>
+			</trim>
+		</where>
+	</sql>
+	<!-- 根据ID 查询 -->
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from wr_user_flow
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<!-- 查询总数 -->
+	<select id="selectCount" resultType="java.lang.Integer">
+		select count(id)
+		from wr_user_flow
+		<include refid="BaseWhereClause" />
+	</select>
+	<!-- 根据param 查询 -->
+	<select id="select" resultMap="BaseResultMap" parameterType="wr.com.pojo.WrRBInfo">
+		select
+		<include refid="Base_Column_List" />
+		from wr_user_flow
+		<include refid="BaseWhereClause" />
+	</select>
+	<!-- 根据Id删除 -->
+	<update id="deleteById" parameterType="java.lang.Integer">
+		update wr_user_flow
+		set
+		is_deleted='Y'
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<!-- 根据IDS批量删除 -->
+	<update id="deleteByIds">
+		update wr_user_flow
+		set is_deleted='Y'
+		where id in
+		(
+		<foreach collection="array" index="index" item="tag"
+			separator=",">
+			#{tag}
+		</foreach>
+		)
+	</update>
+	<insert id="insert" parameterType="wr.com.pojo.WrUserFlow">
+		insert into wr_user_flow (id,
+		modifier, create_time,
+		last_modify_time, is_deleted, history_id,
+		repay_amount, rest_amount, repay_id,
+		fund_type, remark)
+		values
+		(#{id,jdbcType=INTEGER}, #{modifier,jdbcType=INTEGER},
+		#{createTime,jdbcType=INTEGER},
+		#{lastModifyTime,jdbcType=TIMESTAMP},
+		#{isDeleted,jdbcType=CHAR}, #{historyId,jdbcType=INTEGER},
+		#{repayAmount,jdbcType=DECIMAL}, #{restAmount,jdbcType=DECIMAL},
+		#{repayId,jdbcType=INTEGER},
+		#{fundType,jdbcType=INTEGER},
+		#{remark,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="wr.com.pojo.WrUserFlow">
+		insert into wr_user_flow
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="modifier != null">
+				modifier,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastModifyTime != null">
+				last_modify_time,
+			</if>
+			<if test="isDeleted != null">
+				is_deleted,
+			</if>
+			<if test="historyId != null">
+				history_id,
+			</if>
+			<if test="repayAmount != null">
+				repay_amount,
+			</if>
+			<if test="restAmount != null">
+				rest_amount,
+			</if>
+			<if test="repayId != null">
+				repay_id,
+			</if>
+			<if test="fundType != null">
+				fund_type,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="modifier != null">
+				#{modifier,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=INTEGER},
+			</if>
+			<if test="lastModifyTime != null">
+				#{lastModifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isDeleted != null">
+				#{isDeleted,jdbcType=CHAR},
+			</if>
+			<if test="historyId != null">
+				#{historyId,jdbcType=INTEGER},
+			</if>
+			<if test="repayAmount != null">
+				#{repayAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="restAmount != null">
+				#{restAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="repayId != null">
+				#{repayId,jdbcType=INTEGER},
+			</if>
+			<if test="fundType != null">
+				#{fundType,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateById" parameterType="wr.com.pojo.WrUserFlow">
+		update wr_user_flow
+		<set>
+			<if test="modifier != null">
+				modifier = #{modifier,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=INTEGER},
+			</if>
+			<if test="lastModifyTime != null">
+				last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isDeleted != null">
+				is_deleted = #{isDeleted,jdbcType=CHAR},
+			</if>
+			<if test="historyId != null">
+				history_id = #{historyId,jdbcType=INTEGER},
+			</if>
+			<if test="repayAmount != null">
+				repay_amount = #{repayAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="restAmount != null">
+				rest_amount = #{restAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="repayId != null">
+				repay_id = #{repayId,jdbcType=INTEGER},
+			</if>
+			<if test="fundType != null">
+				fund_type = #{fundType,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="wr.com.pojo.WrUserFlow">
+		update
+		wr_user_flow
+		set modifier = #{modifier,jdbcType=INTEGER},
+		create_time =
+		#{createTime,jdbcType=INTEGER},
+		last_modify_time =
+		#{lastModifyTime,jdbcType=TIMESTAMP},
+		is_deleted =
+		#{isDeleted,jdbcType=CHAR},
+		history_id = #{historyId,jdbcType=INTEGER},
+		repay_amount = #{repayAmount,jdbcType=DECIMAL},
+		rest_amount =
+		#{restAmount,jdbcType=DECIMAL},
+		repay_id = #{repayId,jdbcType=INTEGER},
+		fund_type = #{fundType,jdbcType=INTEGER},
+		remark =
+		#{remark,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

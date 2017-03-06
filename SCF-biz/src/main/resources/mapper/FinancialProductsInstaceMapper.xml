@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.FinancialProductsInstaceMapper" >
+  <resultMap id="BaseResultMap" type="wr.com.pojo.FinancialProductsInstace" >
+    <id column="iid" property="iid" jdbcType="VARCHAR" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="produce_date" property="produceDate" jdbcType="TIMESTAMP" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="product_limit" property="productLimit" jdbcType="DOUBLE" />
+    <result column="star_date" property="starDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="pledge_rate" property="pledgeRate" jdbcType="DOUBLE" />
+    <result column="interest_type" property="interestType" jdbcType="VARCHAR" />
+    <result column="interest_method" property="interestMethod" jdbcType="VARCHAR" />
+    <result column="product_interest_rate" property="productInterestRate" jdbcType="DOUBLE" />
+    <result column="balance_interest_method" property="balanceInterestMethod" jdbcType="VARCHAR" />
+    <result column="repayment_method" property="repaymentMethod" jdbcType="VARCHAR" />
+    <result column="periods" property="periods" jdbcType="VARCHAR" />
+    <result column="userd_limit" property="userdLimit" jdbcType="DOUBLE" />
+    <result column="product_kind" property="productKind" jdbcType="VARCHAR" />
+    <result column="borrow_user_id" property="borrowUserId" jdbcType="VARCHAR" />
+    <result column="borrow_user_Name" property="borrowUserName" jdbcType="VARCHAR" />
+    <result column="if_expire" property="ifExpire" jdbcType="VARCHAR" />
+    <result column="borrowing_balance" property="borrowingBalance" jdbcType="DOUBLE" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, id, produce_date, product_name, product_limit, star_date, end_date, pledge_rate, 
+    interest_type, interest_method, product_interest_rate, balance_interest_method, repayment_method, 
+    periods, userd_limit, product_kind, borrow_user_id, borrow_user_Name, if_expire, 
+    borrowing_balance, pid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wr_financial_products_instace
+    where iid = #{iid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wr_financial_products_instace
+    where iid = #{iid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="wr.com.pojo.FinancialProductsInstace" >
+    insert into wr_financial_products_instace (iid, id, produce_date, 
+      product_name, product_limit, star_date, 
+      end_date, pledge_rate, interest_type, 
+      interest_method, product_interest_rate, balance_interest_method, 
+      repayment_method, periods, userd_limit, 
+      product_kind, borrow_user_id, borrow_user_Name, 
+      if_expire, borrowing_balance, pid
+      )
+    values (#{iid,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{produceDate,jdbcType=TIMESTAMP}, 
+      #{productName,jdbcType=VARCHAR}, #{productLimit,jdbcType=DOUBLE}, #{starDate,jdbcType=TIMESTAMP}, 
+      #{endDate,jdbcType=TIMESTAMP}, #{pledgeRate,jdbcType=DOUBLE}, #{interestType,jdbcType=VARCHAR}, 
+      #{interestMethod,jdbcType=VARCHAR}, #{productInterestRate,jdbcType=DOUBLE}, #{balanceInterestMethod,jdbcType=VARCHAR}, 
+      #{repaymentMethod,jdbcType=VARCHAR}, #{periods,jdbcType=VARCHAR}, #{userdLimit,jdbcType=DOUBLE}, 
+      #{productKind,jdbcType=VARCHAR}, #{borrowUserId,jdbcType=VARCHAR}, #{borrowUserName,jdbcType=VARCHAR}, 
+      #{ifExpire,jdbcType=VARCHAR}, #{borrowingBalance,jdbcType=DOUBLE}, #{pid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="wr.com.pojo.FinancialProductsInstace" >
+    insert into wr_financial_products_instace
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="produceDate != null" >
+        produce_date,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="productLimit != null" >
+        product_limit,
+      </if>
+      <if test="starDate != null" >
+        star_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="pledgeRate != null" >
+        pledge_rate,
+      </if>
+      <if test="interestType != null" >
+        interest_type,
+      </if>
+      <if test="interestMethod != null" >
+        interest_method,
+      </if>
+      <if test="productInterestRate != null" >
+        product_interest_rate,
+      </if>
+      <if test="balanceInterestMethod != null" >
+        balance_interest_method,
+      </if>
+      <if test="repaymentMethod != null" >
+        repayment_method,
+      </if>
+      <if test="periods != null" >
+        periods,
+      </if>
+      <if test="userdLimit != null" >
+        userd_limit,
+      </if>
+      <if test="productKind != null" >
+        product_kind,
+      </if>
+      <if test="borrowUserId != null" >
+        borrow_user_id,
+      </if>
+      <if test="borrowUserName != null" >
+        borrow_user_Name,
+      </if>
+      <if test="ifExpire != null" >
+        if_expire,
+      </if>
+      <if test="borrowingBalance != null" >
+        borrowing_balance,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="produceDate != null" >
+        #{produceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productLimit != null" >
+        #{productLimit,jdbcType=DOUBLE},
+      </if>
+      <if test="starDate != null" >
+        #{starDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pledgeRate != null" >
+        #{pledgeRate,jdbcType=DOUBLE},
+      </if>
+      <if test="interestType != null" >
+        #{interestType,jdbcType=VARCHAR},
+      </if>
+      <if test="interestMethod != null" >
+        #{interestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="productInterestRate != null" >
+        #{productInterestRate,jdbcType=DOUBLE},
+      </if>
+      <if test="balanceInterestMethod != null" >
+        #{balanceInterestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentMethod != null" >
+        #{repaymentMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="periods != null" >
+        #{periods,jdbcType=VARCHAR},
+      </if>
+      <if test="userdLimit != null" >
+        #{userdLimit,jdbcType=DOUBLE},
+      </if>
+      <if test="productKind != null" >
+        #{productKind,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowUserId != null" >
+        #{borrowUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowUserName != null" >
+        #{borrowUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="ifExpire != null" >
+        #{ifExpire,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowingBalance != null" >
+        #{borrowingBalance,jdbcType=DOUBLE},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="wr.com.pojo.FinancialProductsInstace" >
+    update wr_financial_products_instace
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="produceDate != null" >
+        produce_date = #{produceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productLimit != null" >
+        product_limit = #{productLimit,jdbcType=DOUBLE},
+      </if>
+      <if test="starDate != null" >
+        star_date = #{starDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pledgeRate != null" >
+        pledge_rate = #{pledgeRate,jdbcType=DOUBLE},
+      </if>
+      <if test="interestType != null" >
+        interest_type = #{interestType,jdbcType=VARCHAR},
+      </if>
+      <if test="interestMethod != null" >
+        interest_method = #{interestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="productInterestRate != null" >
+        product_interest_rate = #{productInterestRate,jdbcType=DOUBLE},
+      </if>
+      <if test="balanceInterestMethod != null" >
+        balance_interest_method = #{balanceInterestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentMethod != null" >
+        repayment_method = #{repaymentMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="periods != null" >
+        periods = #{periods,jdbcType=VARCHAR},
+      </if>
+      <if test="userdLimit != null" >
+        userd_limit = #{userdLimit,jdbcType=DOUBLE},
+      </if>
+      <if test="productKind != null" >
+        product_kind = #{productKind,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowUserId != null" >
+        borrow_user_id = #{borrowUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowUserName != null" >
+        borrow_user_Name = #{borrowUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="ifExpire != null" >
+        if_expire = #{ifExpire,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowingBalance != null" >
+        borrowing_balance = #{borrowingBalance,jdbcType=DOUBLE},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wr.com.pojo.FinancialProductsInstace" >
+    update wr_financial_products_instace
+    set id = #{id,jdbcType=INTEGER},
+      produce_date = #{produceDate,jdbcType=TIMESTAMP},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_limit = #{productLimit,jdbcType=DOUBLE},
+      star_date = #{starDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      pledge_rate = #{pledgeRate,jdbcType=DOUBLE},
+      interest_type = #{interestType,jdbcType=VARCHAR},
+      interest_method = #{interestMethod,jdbcType=VARCHAR},
+      product_interest_rate = #{productInterestRate,jdbcType=DOUBLE},
+      balance_interest_method = #{balanceInterestMethod,jdbcType=VARCHAR},
+      repayment_method = #{repaymentMethod,jdbcType=VARCHAR},
+      periods = #{periods,jdbcType=VARCHAR},
+      userd_limit = #{userdLimit,jdbcType=DOUBLE},
+      product_kind = #{productKind,jdbcType=VARCHAR},
+      borrow_user_id = #{borrowUserId,jdbcType=VARCHAR},
+      borrow_user_Name = #{borrowUserName,jdbcType=VARCHAR},
+      if_expire = #{ifExpire,jdbcType=VARCHAR},
+      borrowing_balance = #{borrowingBalance,jdbcType=DOUBLE},
+      pid = #{pid,jdbcType=VARCHAR}
+    where iid = #{iid,jdbcType=VARCHAR}
+  </update>
+</mapper>

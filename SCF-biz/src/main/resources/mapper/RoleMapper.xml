@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="wr.com.pojo.Role" >
+    <id column="role_id" property="roleId" jdbcType="VARCHAR" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    *
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wr_role
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType = "java.lang.String">
+  	SELECT
+  	b.role_id, b.role_name
+  	FROM wr_user a,wr_role b,wr_user_role c
+  	WHERE a.user_id=#{userId}
+  	AND a.user_id = c.`user_id` AND b.`role_id` = c.`role_id` 
+  			
+  </select>
+  <select id="selectRolePackgeByUserId" resultMap="BaseResultMap" parameterType = "java.lang.String">
+  	SELECT	 rr.role_id, rr.role_name 
+  	FROM wr_user u , wr_user_rolePackage rp,wr_rolePackage p ,wr_role rr,wr_role_rolepackage rrp 
+  	WHERE p.`rp_id` = rrp.`rpid`AND rrp.`rid` = rr.`role_id`AND rp.`user_id`=u.`user_id` AND rp.`rp_id`=p.`rp_id` 
+  	AND u.`user_id`=#{userId}
+  			
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wr_role
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="wr.com.pojo.Role" >
+    insert into wr_role (role_id, role_name)
+    values (#{roleId,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="wr.com.pojo.Role" >
+    insert into wr_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="roleName != null" >
+        role_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="wr.com.pojo.Role" >
+    update wr_role
+    <set >
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wr.com.pojo.Role" >
+    update wr_role
+    set role_name = #{roleName,jdbcType=VARCHAR}
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </update>
+</mapper>

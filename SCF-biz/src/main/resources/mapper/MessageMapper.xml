@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.MessageMapper" >
+  <resultMap id="BaseResultMap" type="wr.com.pojo.Message" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="mid" property="mid" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="content_head" property="contentHead" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="VARCHAR" />
+    <result column="statue" property="statue" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="ast_modified_time" property="astModifiedTime" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, mid, type, content_head, content, date, statue, user_id, create_time, ast_modified_time, 
+    modifier, creator
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from wr_message_centre
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByType" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wr_message_centre
+    where type = #{0,jdbcType=VARCHAR} and
+    user_id = #{1} order by date desc
+  </select>
+  <select id="selectMoreDate" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wr_message_centre
+    where date > #{0,jdbcType=VARCHAR} and
+    user_id = #{1} order by date desc
+  </select>
+  <delete id="deleteByMid" parameterType="java.lang.String" >
+    delete from wr_message_centre
+    where mid = #{mid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="wr.com.pojo.Message" >
+    insert into wr_message_centre (id, mid, type, 
+      content_head, content, date, 
+      statue, user_id, create_time, 
+      ast_modified_time, modifier, creator
+      )
+    values (#{id,jdbcType=INTEGER}, #{mid,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{contentHead,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, 
+      #{statue,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{astModifiedTime,jdbcType=VARCHAR}, #{modifier,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="wr.com.pojo.Message" >
+    insert into wr_message_centre
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="contentHead != null" >
+        content_head,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="statue != null" >
+        statue,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="astModifiedTime != null" >
+        ast_modified_time,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="contentHead != null" >
+        #{contentHead,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="statue != null" >
+        #{statue,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="astModifiedTime != null" >
+        #{astModifiedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="wr.com.pojo.Message" >
+    update wr_message_centre
+    <set >
+      <if test="mid != null" >
+        mid = #{mid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="contentHead != null" >
+        content_head = #{contentHead,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="statue != null" >
+        statue = #{statue,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="astModifiedTime != null" >
+        ast_modified_time = #{astModifiedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wr.com.pojo.Message" >
+    update wr_message_centre
+    set mid = #{mid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      content_head = #{contentHead,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      date = #{date,jdbcType=VARCHAR},
+      statue = #{statue,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      ast_modified_time = #{astModifiedTime,jdbcType=VARCHAR},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="changeStatue">
+  	update wr_message_centre
+  	set statue = #{1}
+  	where mid = #{0}
+  </update>
+</mapper>

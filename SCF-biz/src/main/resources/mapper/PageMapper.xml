@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.PageMapper" >
+  <resultMap id="BaseResultMap" type="wr.com.pojo.Page" >
+    <id column="page_id" property="pageId" jdbcType="VARCHAR" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="modifier" property="modifier" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_modify_time" property="lastModifyTime" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="CHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="page_name" property="pageName" jdbcType="VARCHAR" />
+    <result column="page_type" property="pageType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    page_id, id, modifier, create_time, last_modify_time, is_deleted, remark, page_name, 
+    page_type
+  </sql>
+  <select id="getPageIdsByRoleIds" resultType="java.lang.String" parameterType="java.util.List">
+   SELECT pageid FROM wr_role_page WHERE roleid in 
+   <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+		#{item.roleId}
+</foreach>
+  </select>
+  <select id="findByRoleIds" resultMap="BaseResultMap" parameterType="java.util.List">
+  	SELECT
+  	p.page_id, p.id, p.modifier, p.create_time, p.last_modify_time, p.is_deleted, p.remark, p.page_name, p.page_type
+  	FROM wr_page p,wr_role r, wr_role_page a 
+  	WHERE p.`page_id`=a.`pageid` AND r.`role_id` = a.`roleid` AND r.`role_id` in
+  	 <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+		#{item.roleId}
+</foreach>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wr_page
+    where page_id = #{pageId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wr_page
+    where page_id = #{pageId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="wr.com.pojo.Page" >
+    insert into wr_page (page_id, id, modifier, 
+      create_time, last_modify_time, is_deleted, 
+      remark, page_name, page_type
+      )
+    values (#{pageId,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{modifier,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{lastModifyTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=CHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{pageName,jdbcType=VARCHAR}, #{pageType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="wr.com.pojo.Page" >
+    insert into wr_page
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pageId != null" >
+        page_id,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastModifyTime != null" >
+        last_modify_time,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="pageName != null" >
+        page_name,
+      </if>
+      <if test="pageType != null" >
+        page_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pageId != null" >
+        #{pageId,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyTime != null" >
+        #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pageName != null" >
+        #{pageName,jdbcType=VARCHAR},
+      </if>
+      <if test="pageType != null" >
+        #{pageType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="wr.com.pojo.Page" >
+    update wr_page
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyTime != null" >
+        last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pageName != null" >
+        page_name = #{pageName,jdbcType=VARCHAR},
+      </if>
+      <if test="pageType != null" >
+        page_type = #{pageType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where page_id = #{pageId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wr.com.pojo.Page" >
+    update wr_page
+    set id = #{id,jdbcType=INTEGER},
+      modifier = #{modifier,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=CHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      page_name = #{pageName,jdbcType=VARCHAR},
+      page_type = #{pageType,jdbcType=VARCHAR}
+    where page_id = #{pageId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.WrMenuMapper">
+	<resultMap id="BaseResultMap" type="wr.com.pojo.WrMenu">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="creator" property="creator" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="modifier" property="modifier" jdbcType="VARCHAR" />
+		<result column="last_modify_time" property="lastModifyTime"
+			jdbcType="TIMESTAMP" />
+		<result column="is_deleted" property="isDeleted" jdbcType="CHAR" />
+		<result column="menu_id" property="menuId" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+		<result column="parent_name" property="parentName" jdbcType="VARCHAR" />
+		<result column="layer_num" property="layerNum" jdbcType="INTEGER" />
+		<result column="is_leaf" property="isLeaf" jdbcType="INTEGER" />
+		<result column="order_num" property="orderNum" jdbcType="INTEGER" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, creator, create_time, modifier, last_modify_time, is_deleted,
+		menu_id, name,
+		parent_id, parent_name, layer_num, is_leaf, order_num, url, status, remark
+	</sql>
+	<!-- 查询条件 -->
+	<sql id="BaseWhereClause">
+		<where>
+			<trim prefixOverrides="and">
+				<include refid="COMMON.BASE_WHERE_CLAUSE" />
+				<if test="menuId != null">
+					and menu_id = #{menuId,jdbcType=VARCHAR}
+				</if>
+				<if test="parentId != null">
+					and parent_id = #{parentId,jdbcType=VARCHAR}
+				</if>
+			</trim>
+		</where>
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from wr_menu
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<!-- 根据param 查询 -->
+	<select id="select" resultMap="BaseResultMap" parameterType="wr.com.pojo.WrMenu">
+		select
+		<include refid="Base_Column_List" />
+		from wr_menu
+		<include refid="BaseWhereClause" />
+		and is_deleted = 'N'
+	</select>
+	
+	<!-- 查询数量 -->
+	<select id="selectCount" resultType="java.lang.Integer"
+		parameterType="wr.com.pojo.WrMenu">
+		select
+		count(id)
+		from wr_menu
+		<include refid="BaseWhereClause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''">
+			${pager.orderCondition}
+		</if>
+		<if
+			test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+			${pager.mysqlQueryCondition}
+		</if>
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from wr_menu
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="wr.com.pojo.WrMenu">
+		insert into wr_menu (id, creator, create_time,
+		modifier, last_modify_time, is_deleted,
+		menu_id, name, parent_id,
+		parent_name, layer_num, is_leaf,
+		order_num, url, status,
+		remark)
+		values (#{id,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{modifier,jdbcType=VARCHAR}, #{lastModifyTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=CHAR},
+		#{menuId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+		#{parentId,jdbcType=VARCHAR},
+		#{parentName,jdbcType=VARCHAR}, #{layerNum,jdbcType=INTEGER}, #{isLeaf,jdbcType=INTEGER},
+		#{orderNum,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR},
+		#{status,jdbcType=INTEGER},
+		#{remark,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="wr.com.pojo.WrMenu">
+		insert into wr_menu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="creator != null">
+				creator,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="modifier != null">
+				modifier,
+			</if>
+			<if test="lastModifyTime != null">
+				last_modify_time,
+			</if>
+			<if test="isDeleted != null">
+				is_deleted,
+			</if>
+			<if test="menuId != null">
+				menu_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="parentName != null">
+				parent_name,
+			</if>
+			<if test="layerNum != null">
+				layer_num,
+			</if>
+			<if test="isLeaf != null">
+				is_leaf,
+			</if>
+			<if test="orderNum != null">
+				order_num,
+			</if>
+			<if test="url != null">
+				url,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifier != null">
+				#{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="lastModifyTime != null">
+				#{lastModifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isDeleted != null">
+				#{isDeleted,jdbcType=CHAR},
+			</if>
+			<if test="menuId != null">
+				#{menuId,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=VARCHAR},
+			</if>
+			<if test="parentName != null">
+				#{parentName,jdbcType=VARCHAR},
+			</if>
+			<if test="layerNum != null">
+				#{layerNum,jdbcType=INTEGER},
+			</if>
+			<if test="isLeaf != null">
+				#{isLeaf,jdbcType=INTEGER},
+			</if>
+			<if test="orderNum != null">
+				#{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="wr.com.pojo.WrMenu">
+		update wr_menu
+		<set>
+			<if test="creator != null">
+				creator = #{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifier != null">
+				modifier = #{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="lastModifyTime != null">
+				last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isDeleted != null">
+				is_deleted = #{isDeleted,jdbcType=CHAR},
+			</if>
+			<if test="menuId != null">
+				menu_id = #{menuId,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=VARCHAR},
+			</if>
+			<if test="parentName != null">
+				parent_name = #{parentName,jdbcType=VARCHAR},
+			</if>
+			<if test="layerNum != null">
+				layer_num = #{layerNum,jdbcType=INTEGER},
+			</if>
+			<if test="isLeaf != null">
+				is_leaf = #{isLeaf,jdbcType=INTEGER},
+			</if>
+			<if test="orderNum != null">
+				order_num = #{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="url != null">
+				url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="wr.com.pojo.WrMenu">
+		update wr_menu
+		set creator = #{creator,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		modifier = #{modifier,jdbcType=VARCHAR},
+		last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+		is_deleted = #{isDeleted,jdbcType=CHAR},
+		menu_id = #{menuId,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		parent_id = #{parentId,jdbcType=VARCHAR},
+		parent_name = #{parentName,jdbcType=VARCHAR},
+		layer_num = #{layerNum,jdbcType=INTEGER},
+		is_leaf = #{isLeaf,jdbcType=INTEGER},
+		order_num = #{orderNum,jdbcType=INTEGER},
+		url = #{url,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

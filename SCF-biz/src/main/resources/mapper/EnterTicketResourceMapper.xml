@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.EnterTicketResourceMapper" >
+  <resultMap id="BaseResultMap" type="wr.com.pojo.EnterTicketResource" >
+    <result column="sjbh" property="sjbh" jdbcType="VARCHAR" />
+    <result column="dbbh" property="dbbh" jdbcType="VARCHAR" />
+    <result column="ch" property="ch" jdbcType="VARCHAR" />
+    <result column="yclbh" property="yclbh" jdbcType="DOUBLE" />
+    <result column="mc" property="mc" jdbcType="VARCHAR" />
+    <result column="ggxh" property="ggxh" jdbcType="VARCHAR" />
+    <result column="ysdw" property="ysdw" jdbcType="VARCHAR" />
+    <result column="mz" property="mz" jdbcType="DOUBLE" />
+    <result column="pz" property="pz" jdbcType="DOUBLE" />
+    <result column="jz" property="jz" jdbcType="DOUBLE" />
+    <result column="sf" property="sf" jdbcType="DOUBLE" />
+    <result column="sfkj" property="sfkj" jdbcType="DOUBLE" />
+    <result column="zz" property="zz" jdbcType="DOUBLE" />
+    <result column="zzkj" property="zzkj" jdbcType="DOUBLE" />
+    <result column="bwql" property="bwql" jdbcType="DOUBLE" />
+    <result column="bwqlkj" property="bwqlkj" jdbcType="DOUBLE" />
+    <result column="qt" property="qt" jdbcType="DOUBLE" />
+    <result column="bz" property="bz" jdbcType="VARCHAR" />
+    <result column="ljkj" property="ljkj" jdbcType="DOUBLE" />
+    <result column="zzjz" property="zzjz" jdbcType="DOUBLE" />
+    <result column="dj" property="dj" jdbcType="DOUBLE" />
+    <result column="jsje" property="jsje" jdbcType="DOUBLE" />
+    <result column="jsrqsj" property="jsrqsj" jdbcType="TIMESTAMP" />
+    <result column="jsbj" property="jsbj" jdbcType="DOUBLE" />
+    <result column="bj" property="bj" jdbcType="DOUBLE" />
+    <result column="jsrq" property="jsrq" jdbcType="TIMESTAMP" />
+    <result column="gbrq" property="gbrq" jdbcType="TIMESTAMP" />
+    <result column="cdbj" property="cdbj" jdbcType="VARCHAR" />
+    <result column="dlrq1" property="dlrq1" jdbcType="TIMESTAMP" />
+    <result column="qy" property="qy" jdbcType="VARCHAR" />
+    <result column="gbr" property="gbr" jdbcType="VARCHAR" />
+    <result column="jbr" property="jbr" jdbcType="VARCHAR" />
+    <result column="nbdj" property="nbdj" jdbcType="DOUBLE" />
+    <result column="nbjsje" property="nbjsje" jdbcType="DOUBLE" />
+    <result column="nbxs" property="nbxs" jdbcType="DOUBLE" />
+    <result column="warehouse" property="warehouse" jdbcType="VARCHAR" />
+    <result column="zxf" property="zxf" jdbcType="DOUBLE" />
+  </resultMap>
+   <sql id="Base_Column_List" >
+    sjbh, dbbh, ch, 
+    yclbh, mc, ggxh, ysdw, 
+    mz, pz, jz, sf, 
+    sfkj, zz, zzkj, bwql, 
+    bwqlkj, qt, bz, ljkj, 
+    zzjz, dj, jsje, jsrqsj, 
+    jsbj, bj, jsrq, gbrq, 
+    cdbj, dlrq1, qy, 
+    gbr, jbr, nbdj, nbjsje, 
+    nbxs, warehouse, zxf
+  </sql>
+   <select id="selectAll" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from enter_ticket_resource
+  </select>
+  <insert id="insertSelective" parameterType="wr.com.pojo.EnterTicketResource" >
+    insert into enter_ticket_resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sjbh != null" >
+        sjbh,
+      </if>
+      <if test="dbbh != null" >
+        dbbh,
+      </if>
+      <if test="ch != null" >
+        ch,
+      </if>
+      <if test="yclbh != null" >
+        yclbh,
+      </if>
+      <if test="mc != null" >
+        mc,
+      </if>
+      <if test="ggxh != null" >
+        ggxh,
+      </if>
+      <if test="ysdw != null" >
+        ysdw,
+      </if>
+      <if test="mz != null" >
+        mz,
+      </if>
+      <if test="pz != null" >
+        pz,
+      </if>
+      <if test="jz != null" >
+        jz,
+      </if>
+      <if test="sf != null" >
+        sf,
+      </if>
+      <if test="sfkj != null" >
+        sfkj,
+      </if>
+      <if test="zz != null" >
+        zz,
+      </if>
+      <if test="zzkj != null" >
+        zzkj,
+      </if>
+      <if test="bwql != null" >
+        bwql,
+      </if>
+      <if test="bwqlkj != null" >
+        bwqlkj,
+      </if>
+      <if test="qt != null" >
+        qt,
+      </if>
+      <if test="bz != null" >
+        bz,
+      </if>
+      <if test="ljkj != null" >
+        ljkj,
+      </if>
+      <if test="zzjz != null" >
+        zzjz,
+      </if>
+      <if test="dj != null" >
+        dj,
+      </if>
+      <if test="jsje != null" >
+        jsje,
+      </if>
+      <if test="jsrqsj != null" >
+        jsrqsj,
+      </if>
+      <if test="jsbj != null" >
+        jsbj,
+      </if>
+      <if test="bj != null" >
+        bj,
+      </if>
+      <if test="jsrq != null" >
+        jsrq,
+      </if>
+      <if test="gbrq != null" >
+        gbrq,
+      </if>
+      <if test="cdbj != null" >
+        cdbj,
+      </if>
+      <if test="dlrq1 != null" >
+        dlrq1,
+      </if>
+      <if test="qy != null" >
+        qy,
+      </if>
+      <if test="gbr != null" >
+        gbr,
+      </if>
+      <if test="jbr != null" >
+        jbr,
+      </if>
+      <if test="nbdj != null" >
+        nbdj,
+      </if>
+      <if test="nbjsje != null" >
+        nbjsje,
+      </if>
+      <if test="nbxs != null" >
+        nbxs,
+      </if>
+      <if test="warehouse != null" >
+        warehouse,
+      </if>
+      <if test="zxf != null" >
+        zxf,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sjbh != null" >
+        #{sjbh,jdbcType=VARCHAR},
+      </if>
+      <if test="dbbh != null" >
+        #{dbbh,jdbcType=VARCHAR},
+      </if>
+      <if test="ch != null" >
+        #{ch,jdbcType=VARCHAR},
+      </if>
+      <if test="yclbh != null" >
+        #{yclbh,jdbcType=DOUBLE},
+      </if>
+      <if test="mc != null" >
+        #{mc,jdbcType=VARCHAR},
+      </if>
+      <if test="ggxh != null" >
+        #{ggxh,jdbcType=VARCHAR},
+      </if>
+      <if test="ysdw != null" >
+        #{ysdw,jdbcType=VARCHAR},
+      </if>
+      <if test="mz != null" >
+        #{mz,jdbcType=DOUBLE},
+      </if>
+      <if test="pz != null" >
+        #{pz,jdbcType=DOUBLE},
+      </if>
+      <if test="jz != null" >
+        #{jz,jdbcType=DOUBLE},
+      </if>
+      <if test="sf != null" >
+        #{sf,jdbcType=DOUBLE},
+      </if>
+      <if test="sfkj != null" >
+        #{sfkj,jdbcType=DOUBLE},
+      </if>
+      <if test="zz != null" >
+        #{zz,jdbcType=DOUBLE},
+      </if>
+      <if test="zzkj != null" >
+        #{zzkj,jdbcType=DOUBLE},
+      </if>
+      <if test="bwql != null" >
+        #{bwql,jdbcType=DOUBLE},
+      </if>
+      <if test="bwqlkj != null" >
+        #{bwqlkj,jdbcType=DOUBLE},
+      </if>
+      <if test="qt != null" >
+        #{qt,jdbcType=DOUBLE},
+      </if>
+      <if test="bz != null" >
+        #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="ljkj != null" >
+        #{ljkj,jdbcType=DOUBLE},
+      </if>
+      <if test="zzjz != null" >
+        #{zzjz,jdbcType=DOUBLE},
+      </if>
+      <if test="dj != null" >
+        #{dj,jdbcType=DOUBLE},
+      </if>
+      <if test="jsje != null" >
+        #{jsje,jdbcType=DOUBLE},
+      </if>
+      <if test="jsrqsj != null" >
+        #{jsrqsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jsbj != null" >
+        #{jsbj,jdbcType=DOUBLE},
+      </if>
+      <if test="bj != null" >
+        #{bj,jdbcType=DOUBLE},
+      </if>
+      <if test="jsrq != null" >
+        #{jsrq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gbrq != null" >
+        #{gbrq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cdbj != null" >
+        #{cdbj,jdbcType=VARCHAR},
+      </if>
+      <if test="dlrq1 != null" >
+        #{dlrq1,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qy != null" >
+        #{qy,jdbcType=VARCHAR},
+      </if>
+      <if test="gbr != null" >
+        #{gbr,jdbcType=VARCHAR},
+      </if>
+      <if test="jbr != null" >
+        #{jbr,jdbcType=VARCHAR},
+      </if>
+      <if test="nbdj != null" >
+        #{nbdj,jdbcType=DOUBLE},
+      </if>
+      <if test="nbjsje != null" >
+        #{nbjsje,jdbcType=DOUBLE},
+      </if>
+      <if test="nbxs != null" >
+        #{nbxs,jdbcType=DOUBLE},
+      </if>
+      <if test="warehouse != null" >
+        #{warehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="zxf != null" >
+        #{zxf,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+</mapper>

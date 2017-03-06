@@ -1,0 +1,701 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.WrBBInfoMapper">
+	<resultMap id="BaseResultMap" type="wr.com.pojo.BBInfo.WrBBInfoVO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="modifier" property="modifier" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="INTEGER" />
+		<result column="last_modify_time" property="lastModifyTime"
+			jdbcType="TIMESTAMP" />
+		<result column="is_deleted" property="isDeleted" jdbcType="CHAR" />
+		<result column="order_id" property="orderId" jdbcType="VARCHAR" />
+		<result column="financial_institution_id" property="financialInstitutionId" jdbcType="VARCHAR" />
+		<result column="mobile_phone" property="mobilePhone" jdbcType="VARCHAR" />
+		<result column="borrower_id" property="borrowerId" jdbcType="INTEGER" />
+		<result column="order_num" property="orderNum" jdbcType="VARCHAR" />
+		<result column="borrow_amount" property="borrowAmount"
+			jdbcType="DECIMAL" />
+		<result column="once_interest_rate" property="onceInterestRate"
+			jdbcType="DECIMAL" />
+		<result column="fee_rate" property="feeRate" jdbcType="INTEGER" />
+		<result column="fee_amount" property="feeAmount" jdbcType="DECIMAL" />
+		<result column="overdue_fee_rate" property="overdueFeeRate"
+			jdbcType="INTEGER" />
+		<result column="break_rate" property="breakRate" jdbcType="DECIMAL" />
+		<result column="rate_month" property="rateMonth" jdbcType="DECIMAL" />
+		<result column="rate_year" property="rateYear" jdbcType="DECIMAL" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="borrow_apply_time" property="borrowApplyTime"
+			jdbcType="DATE" />
+		<result column="borrow_begin_time" property="borrowBeginTime"
+			jdbcType="DATE" />
+		<result column="borrow_end_time" property="borrowEndTime"
+			jdbcType="DATE" />
+		<result column="profit_begin_time" property="profitBeginTime"
+			jdbcType="DATE" />
+		<result column="profit_end_time" property="profitEndTime"
+			jdbcType="DATE" />
+		<result column="handle_type" property="handleType" jdbcType="VARCHAR" />
+		<result column="pay_way" property="payWay" jdbcType="VARCHAR" />
+		<result column="Borrower" property="borrower" jdbcType="VARCHAR" />
+		<result column="info_id" property="infoId" jdbcType="INTEGER" />
+		<result column="diya_id" property="diyaId" jdbcType="INTEGER" />
+		<result column="loan_type" property="loanType" jdbcType="VARCHAR" />
+		<result column="act_date" property="actDate" jdbcType="INTEGER" />
+		<result column="max_date" property="maxDate" jdbcType="INTEGER" />
+		<result column="prepayment_time" property="prepaymentTime"
+			jdbcType="INTEGER" />
+		<result column="borrow_img" property="borrowImg" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="finance_user_name" property="financeUserName"
+			jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="process_status" property="processStatus" jdbcType="VARCHAR" />
+		<result column="apply_mid" property="applyMid" jdbcType="VARCHAR" />
+		<result column="agreement_id" property="agreementId" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="instance_id" property="instanceId" jdbcType="VARCHAR" />
+		<result column="borrower_name" property="borrowerName" jdbcType="VARCHAR" />
+		<result column="Fname" property="Fname" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, modifier, create_time, last_modify_time, is_deleted,
+		order_id,
+		financial_institution_id, mobile_phone,
+		borrower_id, order_num, borrow_amount,
+		once_interest_rate, fee_rate, fee_amount,
+		overdue_fee_rate, break_rate,
+		rate_month, rate_year, status,
+		borrow_apply_time, borrow_begin_time,
+		borrow_end_time, profit_begin_time, profit_end_time, handle_type,
+		pay_way, Borrower,
+		info_id, diya_id, loan_type, act_date, max_date,
+		prepayment_time,
+		borrow_img, remark,instance_id,borrower_name
+	</sql>
+	<sql id="Union_Column_List">
+		bb.id,bb.modifier, bb.create_time, bb.last_modify_time,bb.is_deleted,
+			bb.order_id,
+			bb.financial_institution_id, bb.mobile_phone,
+			bb.borrower_id, bb.order_num,
+			bb.borrow_amount,
+			bb.once_interest_rate, bb.fee_rate, bb.fee_amount,
+			bb.overdue_fee_rate, bb.break_rate,
+			bb.rate_month, bb.rate_year,
+			bb.status,
+			bb.borrow_apply_time, bb.borrow_begin_time,
+			bb.borrow_end_time, bb.profit_begin_time, bb.profit_end_time,
+			bb.handle_type,
+			bb.pay_way, bb.Borrower,
+			bb.info_id, bb.diya_id,
+			bb.loan_type, bb.act_date, bb.max_date,
+			bb.prepayment_time,
+			bb.borrow_img,
+			bb.order_num,
+			bb.create_time,
+			la.finance_user_name,
+			bb.`status`,
+			la.apply_mid,
+			la.process_status,
+			la.agreement_id,
+			bb.borrow_amount,
+			bb.instance_id,
+			bb.borrower_name
+	</sql>
+	<sql id="BaseWhereClause">
+		<where>
+			<trim prefixOverrides="and">
+				<include refid="COMMON.BASE_WHERE_CLAUSE" />
+				<if test="orderId != null">
+					and order_id = #{orderId}
+				</if>
+				<if test="financialInstitutionId != null">
+					and financial_institution_id = #{financialInstitutionId,jdbcType=VARCHAR}
+				</if>
+				<if test="mobilePhone != null">
+					and mobile_phone = #{mobilePhone,jdbcType=VARCHAR}
+				</if>
+				<if test="borrowerId != null">
+					and borrower_id = #{borrowerId,jdbcType=INTEGER}
+				</if>
+				<if test="orderNum != null">
+					and order_num = #{orderNum,jdbcType=VARCHAR}
+				</if>
+				<if test="status != null">
+					and status = #{status,jdbcType=VARCHAR}
+				</if>
+				<if test="startDay != null and endDay != null">
+					and create_time between #{startDay} and #{endDay}
+				</if>
+			</trim>
+		</where>
+	</sql>
+	<!-- 级联查询 -->
+	<sql id="BaseWhereClause2">
+		<where>
+			<trim prefixOverrides="and">
+				<if test="id != null">
+					and id = #{id}
+				</if>
+				<if test="orderId != null">
+					and order_id = #{orderId}
+				</if>
+				<if test="financialInstitutionId != null">
+					and financial_institution_id = #{financialInstitutionId,jdbcType=VARHCAR}
+				</if>
+				<if test="mobilePhone != null">
+					and mobile_phone = #{mobilePhone,jdbcType=VARCHAR}
+				</if>
+				<if test="borrowerId != null">
+					and borrower_id = #{borrowerId,jdbcType=INTEGER}
+				</if>
+				<if test="orderNum != null">
+					and order_num = #{orderNum,jdbcType=VARCHAR}
+				</if>
+				<if test="status != null">
+					and status = #{status,jdbcType=VARCHAR}
+				</if>
+				<if test="startDay != null and endDay != null">
+					and create_time like #{endDay}
+				</if>
+				<if test="startDay != null and endDay != null">
+					and create_time between #{startDay} and #{endDay}
+				</if>
+			</trim>
+		</where>
+	</sql>
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+			<include refid="Union_Column_List" />
+		from
+			wr_borrow_base_info bb,
+			wr_loan_application la
+		where bb.order_num = la.aid
+		     and bb.id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="select" resultMap="BaseResultMap" parameterType="wr.com.pojo.BBInfo.WrBBInfoVO">
+		select
+		<include refid="Union_Column_List" />
+		FROM
+		wr_borrow_base_info bb,
+		wr_loan_application la
+		<include refid="BaseWhereClause" />
+		and bb.order_num = la.aid
+		order by bb.create_time DESC
+		<!-- <if test="pager.orderCondition != null and pager.orderCondition != ''">
+			${pager.orderCondition}
+		</if>
+		<if
+			test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+			${pager.mysqlQueryCondition}
+		</if> -->
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer"
+		parameterType="wr.com.pojo.BBInfo.WrBBInfoVO">
+		select
+		count(id)
+		from wr_borrow_base_info
+		<include refid="BaseWhereClause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''">
+			${pager.orderCondition}
+		</if>
+		<if
+			test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+			${pager.mysqlQueryCondition}
+		</if>
+	</select>
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from
+		wr_borrow_base_info
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<!-- 根据IDS批量删除 -->
+	<update id="deleteByIds">
+		update wr_borrow_base_info
+		set is_deleted='Y'
+		where id in
+		(
+		<foreach collection="array" index="index" item="tag"
+			separator=",">
+			#{tag}
+		</foreach>
+		)
+	</update>
+	<insert id="insert" parameterType="wr.com.pojo.BBInfo.WrBBInfoVO">
+		insert into
+		wr_borrow_base_info (id, modifier, create_time,
+		last_modify_time,
+		is_deleted, order_id,
+		financial_institution_id, mobile_phone, borrower_id,
+		order_num,
+		borrow_amount, once_interest_rate,
+		fee_rate, fee_amount,
+		overdue_fee_rate,
+		break_rate, rate_month, rate_year,
+		status,
+		borrow_apply_time, borrow_begin_time,
+		borrow_end_time,
+		profit_begin_time, profit_end_time,
+		handle_type, pay_way, Borrower,
+		info_id, diya_id, loan_type,
+		act_date, max_date, prepayment_time,
+		borrow_img, remark,instance_id,borrower_name)
+		values (#{id,jdbcType=INTEGER},
+		#{modifier,jdbcType=INTEGER},
+		#{createTime,jdbcType=INTEGER},
+		#{lastModifyTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=CHAR},
+		#{orderId,jdbcType=VARCHAR},
+		#{financialInstitutionId,jdbcType=VARCHAR},
+		#{mobilePhone,jdbcType=VARCHAR},
+		#{borrowerId,jdbcType=INTEGER},
+		#{orderNum,jdbcType=VARCHAR}, #{borrowAmount,jdbcType=DECIMAL},
+		#{onceInterestRate,jdbcType=DECIMAL},
+		#{feeRate,jdbcType=INTEGER},
+		#{feeAmount,jdbcType=DECIMAL}, #{overdueFeeRate,jdbcType=INTEGER},
+		#{breakRate,jdbcType=DECIMAL}, #{rateMonth,jdbcType=DECIMAL},
+		#{rateYear,jdbcType=DECIMAL},
+		#{status,jdbcType=VARCHAR},
+		#{borrowApplyTime,jdbcType=DATE}, #{borrowBeginTime,jdbcType=DATE},
+		#{borrowEndTime,jdbcType=DATE}, #{profitBeginTime,jdbcType=DATE},
+		#{profitEndTime,jdbcType=DATE},
+		#{handleType,jdbcType=VARCHAR},
+		#{payWay,jdbcType=VARCHAR}, #{borrower,jdbcType=VARCHAR},
+		#{infoId,jdbcType=INTEGER}, #{diyaId,jdbcType=INTEGER},
+		#{loanType,jdbcType=VARCHAR},
+		#{actDate,jdbcType=INTEGER},
+		#{maxDate,jdbcType=INTEGER}, #{prepaymentTime,jdbcType=INTEGER},
+		#{borrowImg,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},#{instanceId,jdbcType=VARCHAR},#{borrowerName,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="wr.com.pojo.BBInfo.WrBBInfoVO">
+		insert into wr_borrow_base_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="modifier != null">
+				modifier,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastModifyTime != null">
+				last_modify_time,
+			</if>
+			<if test="isDeleted != null">
+				is_deleted,
+			</if>
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="financialInstitutionId != null">
+				financial_institution_id,
+			</if>
+			<if test="mobilePhone != null">
+				mobile_phone,
+			</if>
+			<if test="borrowerId != null">
+				borrower_id,
+			</if>
+			<if test="orderNum != null">
+				order_num,
+			</if>
+			<if test="borrowAmount != null">
+				borrow_amount,
+			</if>
+			<if test="onceInterestRate != null">
+				once_interest_rate,
+			</if>
+			<if test="feeRate != null">
+				fee_rate,
+			</if>
+			<if test="feeAmount != null">
+				fee_amount,
+			</if>
+			<if test="overdueFeeRate != null">
+				overdue_fee_rate,
+			</if>
+			<if test="breakRate != null">
+				break_rate,
+			</if>
+			<if test="rateMonth != null">
+				rate_month,
+			</if>
+			<if test="rateYear != null">
+				rate_year,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="borrowApplyTime != null">
+				borrow_apply_time,
+			</if>
+			<if test="borrowBeginTime != null">
+				borrow_begin_time,
+			</if>
+			<if test="borrowEndTime != null">
+				borrow_end_time,
+			</if>
+			<if test="profitBeginTime != null">
+				profit_begin_time,
+			</if>
+			<if test="profitEndTime != null">
+				profit_end_time,
+			</if>
+			<if test="handleType != null">
+				handle_type,
+			</if>
+			<if test="payWay != null">
+				pay_way,
+			</if>
+			<if test="borrower != null">
+				Borrower,
+			</if>
+			<if test="infoId != null">
+				info_id,
+			</if>
+			<if test="diyaId != null">
+				diya_id,
+			</if>
+			<if test="loanType != null">
+				loan_type,
+			</if>
+			<if test="actDate != null">
+				act_date,
+			</if>
+			<if test="maxDate != null">
+				max_date,
+			</if>
+			<if test="prepaymentTime != null">
+				prepayment_time,
+			</if>
+			<if test="borrowImg != null">
+				borrow_img,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="instanceId != null">
+				instance_id,
+			</if>
+			<if test="borrowerName != null">
+				borrower_name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="modifier != null">
+				#{modifier,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=INTEGER},
+			</if>
+			<if test="lastModifyTime != null">
+				#{lastModifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isDeleted != null">
+				#{isDeleted,jdbcType=CHAR},
+			</if>
+			<if test="orderId != null">
+				#{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="financialInstitutionId != null">
+				#{financialInstitutionId,jdbcType=VARCHAR},
+			</if>
+			<if test="mobilePhone != null">
+				#{mobilePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="borrowerId != null">
+				#{borrowerId,jdbcType=INTEGER},
+			</if>
+			<if test="orderNum != null">
+				#{orderNum,jdbcType=VARCHAR},
+			</if>
+			<if test="borrowAmount != null">
+				#{borrowAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="onceInterestRate != null">
+				#{onceInterestRate,jdbcType=DECIMAL},
+			</if>
+			<if test="feeRate != null">
+				#{feeRate,jdbcType=INTEGER},
+			</if>
+			<if test="feeAmount != null">
+				#{feeAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="overdueFeeRate != null">
+				#{overdueFeeRate,jdbcType=INTEGER},
+			</if>
+			<if test="breakRate != null">
+				#{breakRate,jdbcType=DECIMAL},
+			</if>
+			<if test="rateMonth != null">
+				#{rateMonth,jdbcType=DECIMAL},
+			</if>
+			<if test="rateYear != null">
+				#{rateYear,jdbcType=DECIMAL},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="borrowApplyTime != null">
+				#{borrowApplyTime,jdbcType=DATE},
+			</if>
+			<if test="borrowBeginTime != null">
+				#{borrowBeginTime,jdbcType=DATE},
+			</if>
+			<if test="borrowEndTime != null">
+				#{borrowEndTime,jdbcType=DATE},
+			</if>
+			<if test="profitBeginTime != null">
+				#{profitBeginTime,jdbcType=DATE},
+			</if>
+			<if test="profitEndTime != null">
+				#{profitEndTime,jdbcType=DATE},
+			</if>
+			<if test="handleType != null">
+				#{handleType,jdbcType=VARCHAR},
+			</if>
+			<if test="payWay != null">
+				#{payWay,jdbcType=VARCHAR},
+			</if>
+			<if test="borrower != null">
+				#{borrower,jdbcType=VARCHAR},
+			</if>
+			<if test="infoId != null">
+				#{infoId,jdbcType=INTEGER},
+			</if>
+			<if test="diyaId != null">
+				#{diyaId,jdbcType=INTEGER},
+			</if>
+			<if test="loanType != null">
+				#{loanType,jdbcType=VARCHAR},
+			</if>
+			<if test="actDate != null">
+				#{actDate,jdbcType=INTEGER},
+			</if>
+			<if test="maxDate != null">
+				#{maxDate,jdbcType=INTEGER},
+			</if>
+			<if test="prepaymentTime != null">
+				#{prepaymentTime,jdbcType=INTEGER},
+			</if>
+			<if test="borrowImg != null">
+				#{borrowImg,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="instanceId != null">
+				#{instanceId,jdbcType=VARCHAR},
+			</if>
+			<if test="borrowerName != null">
+				#{borrower_name,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateById" parameterType="wr.com.pojo.BBInfo.WrBBInfoVO">
+		update wr_borrow_base_info
+		<set>
+			<include refid="COMMON.BASE_UPDATE_SET" />
+			<if test="orderId != null">
+				order_id = #{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="financialInstitutionId != null">
+				financial_institution_id = #{financialInstitutionId,jdbcType=VARCHAR},
+			</if>
+			<if test="mobilePhone != null">
+				mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="borrowerId != null">
+				borrower_id = #{borrowerId,jdbcType=INTEGER},
+			</if>
+			<if test="orderNum != null">
+				order_num = #{orderNum,jdbcType=VARCHAR},
+			</if>
+			<if test="borrowAmount != null">
+				borrow_amount = #{borrowAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="onceInterestRate != null">
+				once_interest_rate =
+				#{onceInterestRate,jdbcType=DECIMAL},
+			</if>
+			<if test="feeRate != null">
+				fee_rate = #{feeRate,jdbcType=INTEGER},
+			</if>
+			<if test="feeAmount != null">
+				fee_amount = #{feeAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="overdueFeeRate != null">
+				overdue_fee_rate = #{overdueFeeRate,jdbcType=INTEGER},
+			</if>
+			<if test="breakRate != null">
+				break_rate = #{breakRate,jdbcType=DECIMAL},
+			</if>
+			<if test="rateMonth != null">
+				rate_month = #{rateMonth,jdbcType=DECIMAL},
+			</if>
+			<if test="rateYear != null">
+				rate_year = #{rateYear,jdbcType=DECIMAL},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="borrowApplyTime != null">
+				borrow_apply_time = #{borrowApplyTime,jdbcType=DATE},
+			</if>
+			<if test="borrowBeginTime != null">
+				borrow_begin_time = #{borrowBeginTime,jdbcType=DATE},
+			</if>
+			<if test="borrowEndTime != null">
+				borrow_end_time = #{borrowEndTime,jdbcType=DATE},
+			</if>
+			<if test="profitBeginTime != null">
+				profit_begin_time = #{profitBeginTime,jdbcType=DATE},
+			</if>
+			<if test="profitEndTime != null">
+				profit_end_time = #{profitEndTime,jdbcType=DATE},
+			</if>
+			<if test="handleType != null">
+				handle_type = #{handleType,jdbcType=VARCHAR},
+			</if>
+			<if test="payWay != null">
+				pay_way = #{payWay,jdbcType=VARCHAR},
+			</if>
+			<if test="borrower != null">
+				Borrower = #{borrower,jdbcType=VARCHAR},
+			</if>
+			<if test="infoId != null">
+				info_id = #{infoId,jdbcType=INTEGER},
+			</if>
+			<if test="diyaId != null">
+				diya_id = #{diyaId,jdbcType=INTEGER},
+			</if>
+			<if test="loanType != null">
+				loan_type = #{loanType,jdbcType=VARCHAR},
+			</if>
+			<if test="actDate != null">
+				act_date = #{actDate,jdbcType=INTEGER},
+			</if>
+			<if test="maxDate != null">
+				max_date = #{maxDate,jdbcType=INTEGER},
+			</if>
+			<if test="prepaymentTime != null">
+				prepayment_time = #{prepaymentTime,jdbcType=INTEGER},
+			</if>
+			<if test="borrowImg != null">
+				borrow_img = #{borrowImg,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="instanceId != null">
+				instance_id = #{instanceId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateBaseInfo" parameterType="wr.com.pojo.BBInfo.WrBBInfoVO">
+		update wr_borrow_base_info
+		<set>
+			<include refid="COMMON.BASE_UPDATE_SET" />
+			<if test="orderId != null">
+				order_id = #{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="financialInstitutionId != null">
+				financial_institution_id = #{financialInstitutionId,jdbcType=VARCHAR},
+			</if>
+			<if test="mobilePhone != null">
+				mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="borrowerId != null">
+				borrower_id = #{borrowerId,jdbcType=INTEGER},
+			</if>
+			<if test="orderNum != null">
+				order_num = #{orderNum,jdbcType=VARCHAR},
+			</if>
+			<if test="borrowAmount != null">
+				borrow_amount = #{borrowAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="onceInterestRate != null">
+				once_interest_rate =
+				#{onceInterestRate,jdbcType=DECIMAL},
+			</if>
+			<if test="feeRate != null">
+				fee_rate = #{feeRate,jdbcType=INTEGER},
+			</if>
+			<if test="feeAmount != null">
+				fee_amount = #{feeAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="overdueFeeRate != null">
+				overdue_fee_rate = #{overdueFeeRate,jdbcType=INTEGER},
+			</if>
+			<if test="breakRate != null">
+				break_rate = #{breakRate,jdbcType=DECIMAL},
+			</if>
+			<if test="rateMonth != null">
+				rate_month = #{rateMonth,jdbcType=DECIMAL},
+			</if>
+			<if test="rateYear != null">
+				rate_year = #{rateYear,jdbcType=DECIMAL},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="borrowApplyTime != null">
+				borrow_apply_time = #{borrowApplyTime,jdbcType=DATE},
+			</if>
+			<if test="borrowBeginTime != null">
+				borrow_begin_time = #{borrowBeginTime,jdbcType=DATE},
+			</if>
+			<if test="borrowEndTime != null">
+				borrow_end_time = #{borrowEndTime,jdbcType=DATE},
+			</if>
+			<if test="profitBeginTime != null">
+				profit_begin_time = #{profitBeginTime,jdbcType=DATE},
+			</if>
+			<if test="profitEndTime != null">
+				profit_end_time = #{profitEndTime,jdbcType=DATE},
+			</if>
+			<if test="handleType != null">
+				handle_type = #{handleType,jdbcType=VARCHAR},
+			</if>
+			<if test="payWay != null">
+				pay_way = #{payWay,jdbcType=VARCHAR},
+			</if>
+			<if test="borrower != null">
+				Borrower = #{borrower,jdbcType=VARCHAR},
+			</if>
+			<if test="infoId != null">
+				info_id = #{infoId,jdbcType=INTEGER},
+			</if>
+			<if test="diyaId != null">
+				diya_id = #{diyaId,jdbcType=INTEGER},
+			</if>
+			<if test="loanType != null">
+				loan_type = #{loanType,jdbcType=VARCHAR},
+			</if>
+			<if test="actDate != null">
+				act_date = #{actDate,jdbcType=INTEGER},
+			</if>
+			<if test="maxDate != null">
+				max_date = #{maxDate,jdbcType=INTEGER},
+			</if>
+			<if test="prepaymentTime != null">
+				prepayment_time = #{prepaymentTime,jdbcType=INTEGER},
+			</if>
+			<if test="borrowImg != null">
+				borrow_img = #{borrowImg,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="instanceId != null">
+				instance_id = #{instanceId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

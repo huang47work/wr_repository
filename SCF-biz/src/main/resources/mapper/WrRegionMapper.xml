@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.WrRegionMapper">
+	<resultMap id="BaseResultMap" type="wr.com.pojo.WrRegion"
+		extends="COMMON.BASE_RESULT_MAP">
+		<result column="creator" property="creator" jdbcType="INTEGER" />
+		<result column="parent_id" property="parentId" jdbcType="INTEGER" />
+		<result column="region_name" property="regionName" jdbcType="VARCHAR" />
+		<result column="region_type" property="regionType" jdbcType="INTEGER" />
+		<result column="region_name_pys" property="regionNamePys"
+			jdbcType="VARCHAR" />
+		<result column="first_letter" property="firstLetter" jdbcType="CHAR" />
+		<result column="full_id_path" property="fullIdPath" jdbcType="VARCHAR" />
+		<result column="full_name_path" property="fullNamePath"
+			jdbcType="VARCHAR" />
+		<result column="lon" property="lon" jdbcType="DECIMAL" />
+		<result column="lat" property="lat" jdbcType="DECIMAL" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, create_time, creator, last_modify_time, modifier,
+		is_deleted,
+		parent_id, region_name,
+		region_type, region_name_pys,
+		first_letter, full_id_path, full_name_path, lon, lat
+	</sql>
+	<sql id="BaseWhereClause">
+		<where>
+			<trim prefixOverrides="and">
+				<include refid="COMMON.BASE_WHERE_CLAUSE" />
+				<if test="creator != null">
+					and creator = #{creator}
+				</if>
+				<if test="parentId != null">
+					and parent_id = #{parentId}
+				</if>
+				<if test="regionName != null">
+					and region_name = #{regionName}
+				</if>
+				<if test="regionType != null">
+					and region_type = #{regionType}
+				</if>
+				<if test="regionNamePys != null">
+					and region_name_pys = #{regionNamePys}
+				</if>
+				<if test="firstLetter != null">
+					and first_letter = #{firstLetter}
+				</if>
+				<if test="fullIdPath != null">
+					and full_id_path = #{fullIdPath}
+				</if>
+				<if test="fullNamePath != null">
+					and full_name_path = #{fullNamePath}
+				</if>
+			</trim>
+		</where>
+	</sql>
+	<sql id="BaseUpdateSet">
+		<set>
+			<include refid="COMMON.BASE_UPDATE_SET" />
+			<if test="creator != null">
+				creator = #{creator},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId},
+			</if>
+			<if test="regionName != null">
+				region_name = #{regionName},
+			</if>
+			<if test="regionType != null">
+				region_type = #{regionType},
+			</if>
+			<if test="regionNamePys != null">
+				region_name_pys = #{regionNamePys},
+			</if>
+			<if test="firstLetter != null">
+				first_letter = #{firstLetter},
+			</if>
+			<if test="fullIdPath != null">
+				full_id_path = #{fullIdPath},
+			</if>
+			<if test="fullNamePath != null">
+				full_name_path = #{fullNamePath}
+			</if>
+		</set>
+	</sql>
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from wr_region
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<!-- 查询总数 -->
+	<select id="selectCount" resultType="java.lang.Integer">
+		select count(id)
+		from wr_region
+		<include refid="BaseWhereClause" />
+	</select>
+	<!-- 根据param 查询 -->
+	<select id="select" resultMap="BaseResultMap" parameterType="wr.com.pojo.WrInvoice">
+		select
+		<include refid="Base_Column_List" />
+		from wr_region
+		<include refid="BaseWhereClause" />
+	</select>
+	<!-- 根据IDs查询列表 -->
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from wr_region
+		where id in
+		(
+		<foreach collection="array" index="index" item="tag"
+			separator=",">
+			#{tag}
+		</foreach>
+		)
+	</select>
+	<!-- 根据ID 删除 -->
+	<update id="deleteById" parameterType="java.lang.Integer">
+		update wr_region
+		set
+		is_deleted='Y'
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<!-- 根据IDS批量删除 数组:[1,2,3] -->
+	<update id="deleteByIds">
+		update wr_region
+		set is_deleted='Y'
+		where id in
+		(
+		<foreach collection="array" index="index" item="tag"
+			separator=",">
+			#{tag}
+		</foreach>
+		)
+	</update>
+	<insert id="insert" parameterType="wr.com.pojo.WrRegion">
+		insert into wr_region (id,
+		create_time, creator,
+		last_modify_time, modifier, is_deleted,
+		parent_id, region_name, region_type,
+		region_name_pys, first_letter,
+		full_id_path,
+		full_name_path, lon, lat
+		)
+		values (#{id,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{creator,jdbcType=INTEGER},
+		#{lastModifyTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=INTEGER},
+		#{isDeleted,jdbcType=CHAR},
+		#{parentId,jdbcType=INTEGER},
+		#{regionName,jdbcType=VARCHAR},
+		#{regionType,jdbcType=INTEGER},
+		#{regionNamePys,jdbcType=VARCHAR}, #{firstLetter,jdbcType=CHAR},
+		#{fullIdPath,jdbcType=VARCHAR},
+		#{fullNamePath,jdbcType=VARCHAR},
+		#{lon,jdbcType=DECIMAL},
+		#{lat,jdbcType=DECIMAL}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="wr.com.pojo.WrRegion">
+		insert into wr_region
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="creator != null">
+				creator,
+			</if>
+			<if test="lastModifyTime != null">
+				last_modify_time,
+			</if>
+			<if test="modifier != null">
+				modifier,
+			</if>
+			<if test="isDeleted != null">
+				is_deleted,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="regionName != null">
+				region_name,
+			</if>
+			<if test="regionType != null">
+				region_type,
+			</if>
+			<if test="regionNamePys != null">
+				region_name_pys,
+			</if>
+			<if test="firstLetter != null">
+				first_letter,
+			</if>
+			<if test="fullIdPath != null">
+				full_id_path,
+			</if>
+			<if test="fullNamePath != null">
+				full_name_path,
+			</if>
+			<if test="lon != null">
+				lon,
+			</if>
+			<if test="lat != null">
+				lat,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=INTEGER},
+			</if>
+			<if test="lastModifyTime != null">
+				#{lastModifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifier != null">
+				#{modifier,jdbcType=INTEGER},
+			</if>
+			<if test="isDeleted != null">
+				#{isDeleted,jdbcType=CHAR},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=INTEGER},
+			</if>
+			<if test="regionName != null">
+				#{regionName,jdbcType=VARCHAR},
+			</if>
+			<if test="regionType != null">
+				#{regionType,jdbcType=INTEGER},
+			</if>
+			<if test="regionNamePys != null">
+				#{regionNamePys,jdbcType=VARCHAR},
+			</if>
+			<if test="firstLetter != null">
+				#{firstLetter,jdbcType=CHAR},
+			</if>
+			<if test="fullIdPath != null">
+				#{fullIdPath,jdbcType=VARCHAR},
+			</if>
+			<if test="fullNamePath != null">
+				#{fullNamePath,jdbcType=VARCHAR},
+			</if>
+			<if test="lon != null">
+				#{lon,jdbcType=DECIMAL},
+			</if>
+			<if test="lat != null">
+				#{lat,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="wr.com.pojo.WrRegion">
+		update wr_region
+		<set>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null">
+				creator = #{creator,jdbcType=INTEGER},
+			</if>
+			<if test="lastModifyTime != null">
+				last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifier != null">
+				modifier = #{modifier,jdbcType=INTEGER},
+			</if>
+			<if test="isDeleted != null">
+				is_deleted = #{isDeleted,jdbcType=CHAR},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=INTEGER},
+			</if>
+			<if test="regionName != null">
+				region_name = #{regionName,jdbcType=VARCHAR},
+			</if>
+			<if test="regionType != null">
+				region_type = #{regionType,jdbcType=INTEGER},
+			</if>
+			<if test="regionNamePys != null">
+				region_name_pys = #{regionNamePys,jdbcType=VARCHAR},
+			</if>
+			<if test="firstLetter != null">
+				first_letter = #{firstLetter,jdbcType=CHAR},
+			</if>
+			<if test="fullIdPath != null">
+				full_id_path = #{fullIdPath,jdbcType=VARCHAR},
+			</if>
+			<if test="fullNamePath != null">
+				full_name_path = #{fullNamePath,jdbcType=VARCHAR},
+			</if>
+			<if test="lon != null">
+				lon = #{lon,jdbcType=DECIMAL},
+			</if>
+			<if test="lat != null">
+				lat = #{lat,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<!-- 通过ID更新 -->
+	<update id="updateById">
+		update wr_region
+		<include refid="BaseUpdateSet" />
+		where id = #{id}
+	</update>
+	<!-- 根据ID查询区域名称 -->
+	<select id="selectNameById" resultType="java.lang.String">
+		select fr.region_name
+		from wr_region fr
+		where id = #{id}
+		and fr.is_deleted = 'N'
+	</select>
+
+	<!-- 根据parent_id查询子区域名称 -->
+	<select id="getSonsOfRegion" resultMap="BaseResultMap">
+		select * from wr_region
+		fr
+		where parent_id = #{id}
+		and fr.is_deleted = 'N'
+		<!-- order by #{sortKey}
+		#{sortType} -->
+	</select>
+
+	<!-- 根据fullIdPath查询 -->
+	<select id="queryByFullIdPath" resultMap="BaseResultMap">
+		select * from wr_region
+		where is_deleted = 'N'
+		and full_id_path = #{fullIdPath}
+		limit 1
+	</select>
+
+	<!--根据区域名字获取区域信息 -->
+	<select id="getRegionsByNameList" resultMap="BaseResultMap">
+		select * from wr_region
+		where region_name in
+		(
+		<foreach collection="regionNameList" index="index" item="tag"
+			separator=",">
+			#{tag}
+		</foreach>
+		)
+	</select>
+
+	<!--根据区域名字获取FULLIDPATH -->
+	<select id="getFullIdPathByName" resultType="java.lang.String">
+		select full_id_path
+		from wr_region
+		where region_name = #{regionName}
+		limit 1
+	</select>
+</mapper>

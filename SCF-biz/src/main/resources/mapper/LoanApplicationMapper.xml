@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wr.com.mapper.LoanApplicationMapper">
+  <resultMap id="BaseResultMap" type="wr.com.pojo.LoanApplication">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="aid" jdbcType="VARCHAR" property="aid" />
+    <result column="application_num" jdbcType="VARCHAR" property="applicationNum" />
+    <result column="application_date" jdbcType="TIMESTAMP" property="applicationDate" />
+    <result column="service_name" jdbcType="VARCHAR" property="serviceName" />
+    <result column="ticket_service_status" jdbcType="VARCHAR" property="ticketServiceStatus" />
+    <result column="ticket_status" jdbcType="VARCHAR" property="ticketStatus" />
+    <result column="process_status" jdbcType="VARCHAR" property="processStatus" />
+    <result column="sum" jdbcType="DOUBLE" property="sum" />
+    <result column="if_agreement" jdbcType="VARCHAR" property="ifAgreement" />
+    <result column="agreement_id" jdbcType="VARCHAR" property="agreementId" />
+    <result column="group_id" jdbcType="VARCHAR" property="groupId" />
+    <result column="apply_user_id" jdbcType="VARCHAR" property="applyUserId" />
+    <result column="core_user_id" jdbcType="VARCHAR" property="coreUserId" />
+    <result column="platform_user_id" jdbcType="VARCHAR" property="platformUserId" />
+    <result column="finance_user_id" jdbcType="VARCHAR" property="financeUserId" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="if_delete" jdbcType="VARCHAR" property="ifDelete" />
+    <result column="update_user_id" jdbcType="VARCHAR" property="updateUserId" />
+    <result column="repay_days" jdbcType="VARCHAR" property="repayDays" />
+    <result column="loan_type" jdbcType="VARCHAR" property="loanType" />
+    <result column="next_status" jdbcType="VARCHAR" property="nextStatus" />
+    <result column="next_role" jdbcType="VARCHAR" property="nextRole" />
+    <result column="apply_mid" jdbcType="VARCHAR" property="applyMid"/>
+    <result column="apply_user_name" jdbcType="VARCHAR" property="applyUserName"/>
+    <result column="finance_user_name" jdbcType="VARCHAR" property="financeUserName"/>
+    <result column="reject_reason" jdbcType="VARCHAR" property="rejectReason"/>
+    <result column="iid" jdbcType="VARCHAR" property="iid"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, aid, application_num, application_date, service_name, ticket_service_status, 
+    ticket_status, process_status, sum, if_agreement, agreement_id, group_id, apply_user_id, 
+    core_user_id, platform_user_id, finance_user_id, update_date, if_delete, update_user_id,
+    repay_days,loan_type,next_status,next_role,apply_mid,apply_user_name,finance_user_name,reject_reason,iid
+  </sql>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+  				select <include refid="Base_Column_List"/>
+  				from wr_loan_application
+  				where aid=#{aid,jdbcType=VARCHAR} Order By application_date Desc
+  </select>
+  <select id="findByNearDate" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wr_loan_application
+    where 
+    <if test="start !=null">
+    application_date &gt;= '${start}' and
+    </if>
+    <if test="end !=null">
+    application_date &lt;= '${end}' and
+    </if>
+    ${col} = '${id}' Order By application_date DESC
+  </select>
+  <select id="findByLoanApplicationServiceStatus" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wr_loan_application
+    where
+    <if test="serviceStatus !=null">
+     ticket_service_status = '${serviceStatus}' and
+     </if>
+    <if test="start !=null">
+    application_date &gt;= '${start}' and
+    </if>
+    <if test="end !=null">
+    application_date &lt;= '${end}' and
+    </if>
+    ${col} = '${id}' Order By application_date DESC
+  </select>
+  <select id="findByName" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wr_loan_application
+    where
+    ${col}= ${id} and ticket_status != '2' Order By application_date DESC
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from wr_loan_application
+    where aid = #{aid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="wr.com.pojo.LoanApplication">
+    insert into wr_loan_application
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="aid != null">
+        aid,
+      </if>
+      <if test="applicationNum != null">
+        application_num,
+      </if>
+      <if test="applicationDate != null">
+        application_date,
+      </if>
+      <if test="serviceName != null">
+        service_name,
+      </if>
+      <if test="ticketServiceStatus != null">
+        ticket_service_status,
+      </if>
+      <if test="ticketStatus != null">
+        ticket_status,
+      </if>
+      <if test="processStatus != null">
+        process_status,
+      </if>
+      <if test="sum != null">
+        sum,
+      </if>
+      <if test="ifAgreement != null">
+        if_agreement,
+      </if>
+      <if test="agreementId != null">
+        agreement_id,
+      </if>
+      <if test="groupId != null">
+        group_id,
+      </if>
+      <if test="applyUserId != null">
+        apply_user_id,
+      </if>
+      <if test="coreUserId != null">
+        core_user_id,
+      </if>
+      <if test="platformUserId != null">
+        platform_user_id,
+      </if>
+      <if test="financeUserId != null">
+        finance_user_id,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="ifDelete != null">
+        if_delete,
+      </if>
+      <if test="updateUserId != null">
+        update_user_id,
+      </if>
+      <if test="repayDays != null">
+        repay_days,
+      </if>
+      <if test="loanType != null">
+        loan_type,
+      </if>
+      <if test="nextStatus != null">
+        next_status,
+      </if>
+      <if test="nextRole != null">
+        next_role,
+      </if>
+      <if test="applyMid != null">
+        apply_mid,
+      </if>
+      <if test="applyUserName != null">
+        apply_user_name,
+      </if>
+      <if test="financeUserName != null">
+        finance_user_name,
+      </if>
+      <if test="rejectReason != null">
+        reject_reason,
+      </if>
+      <if test="iid != null">
+        iid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="aid != null">
+        #{aid,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationNum != null">
+        #{applicationNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationDate != null">
+        #{applicationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serviceName != null">
+        #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketServiceStatus != null">
+        #{ticketServiceStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketStatus != null">
+        #{ticketStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="processStatus != null">
+        #{processStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="sum != null">
+        #{sum,jdbcType=DOUBLE},
+      </if>
+      <if test="ifAgreement != null">
+        #{ifAgreement,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementId != null">
+        #{agreementId,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyUserId != null">
+        #{applyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="coreUserId != null">
+        #{coreUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="platformUserId != null">
+        #{platformUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="financeUserId != null">
+        #{financeUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ifDelete != null">
+        #{ifDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserId != null">
+        #{updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="repayDays != null">
+        #{repayDays},
+      </if>
+      <if test="loanType != null">
+        #{loanType},
+      </if>
+      <if test="nextStatus != null">
+        #{nextStatus},
+      </if>
+      <if test="nextRole != null">
+        #{nextRole},
+      </if>
+      <if test="applyMid != null">
+        #{applyMid},
+      </if>
+      <if test="applyUserName != null">
+        #{applyUserName},
+      </if>
+      <if test="financeUserName != null">
+        #{financeUserName},
+      </if>
+      <if test="rejectReason != null">
+        #{rejectReason},
+      </if>
+      <if test="iid != null">
+        #{iid},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="wr.com.pojo.LoanApplication">
+    update wr_loan_application
+    <set>
+      <if test="applicationNum != null">
+        application_num = #{applicationNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationDate != null">
+        application_date = #{applicationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serviceName != null">
+        service_name = #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketServiceStatus != null">
+        ticket_service_status = #{ticketServiceStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketStatus != null">
+        ticket_status = #{ticketStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="processStatus != null">
+        process_status = #{processStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="sum != null">
+        sum = #{sum,jdbcType=DOUBLE},
+      </if>
+      <if test="ifAgreement != null">
+        if_agreement = #{ifAgreement,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementId != null">
+        agreement_id = #{agreementId,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null">
+        group_id = #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyUserId != null">
+        apply_user_id = #{applyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="coreUserId != null">
+        core_user_id = #{coreUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="platformUserId != null">
+        platform_user_id = #{platformUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="financeUserId != null">
+        finance_user_id = #{financeUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ifDelete != null">
+        if_delete = #{ifDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserId != null">
+        update_user_id = #{updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="loanType != null">
+        loan_type = #{loanType,jdbcType=VARCHAR},
+      </if>
+      <if test="repayDays != null">
+        repay_days = #{repayDays},
+      </if>
+      <if test="nextStatus != null">
+        next_status = #{nextStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="nextRole != null">
+        next_role = #{nextRole,jdbcType=VARCHAR},
+      </if>
+      <if test="applyMid != null">
+        apply_mid = #{applyMid,jdbcType=VARCHAR},
+      </if>
+      <if test="applyUserName != null">
+        apply_mid = #{applyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="financeUserName != null">
+        finance_user_name = #{financeUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectReason != null">
+        reject_reason = #{rejectReason,jdbcType=VARCHAR},
+      </if>
+      <if test="iid != null">
+        iid = #{iid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where aid = #{aid,jdbcType=VARCHAR}
+  </update>
+</mapper>

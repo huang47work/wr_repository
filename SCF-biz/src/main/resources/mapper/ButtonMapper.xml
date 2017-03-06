@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.ButtonMapper" >
+  <resultMap id="BaseResultMap" type="wr.com.pojo.Button" >
+    <id column="b_bid" property="bBid" jdbcType="VARCHAR" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="modifier" property="modifier" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_modify_time" property="lastModifyTime" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="CHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="b_bname" property="bBname" jdbcType="VARCHAR" />
+    <result column="operation" property="operation" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleId" jdbcType="VARCHAR" />
+    <result column="page_id" property="pageId" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    b_bid, id, modifier, create_time, last_modify_time, is_deleted, remark, b_bname, 
+    operation, role_id, page_id, url
+  </sql>
+  <select id="getButtonIdsByRoleIds" resultType="java.lang.String" parameterType="java.util.List">
+   SELECT bid FROM wr_role_button WHERE rid in 
+   <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+		#{item.roleId}
+</foreach>
+  </select>
+  <select id="findByRoleIds" resultMap="BaseResultMap" parameterType="java.util.List" >
+    SELECT 
+    b.b_bid, b.id, b.modifier, b.create_time, b.last_modify_time, b.is_deleted, b.remark, b.b_bname, 
+    b.operation, b.role_id, b.page_id, b.url 
+    FROM wr_role r,wr_role_button a ,wr_button b 
+    WHERE r.`role_id`=a.`rid` AND b.`b_bid` = a.`bid` 
+    AND r.`role_id` in 
+    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+		#{item.roleId}
+	</foreach>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wr_button
+    where b_bid = #{bBid,jdbcType=VARCHAR}
+  </select>
+  <select id="findByPageId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wr_button
+    where page_id = #{pageId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wr_button
+    where b_bid = #{bBid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="wr.com.pojo.Button" >
+    insert into wr_button (b_bid, id, modifier, 
+      create_time, last_modify_time, is_deleted, 
+      remark, b_bname, operation, 
+      role_id, page_id, url
+      )
+    values (#{bBid,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{modifier,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{lastModifyTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=CHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{bBname,jdbcType=VARCHAR}, #{operation,jdbcType=VARCHAR}, 
+      #{roleId,jdbcType=VARCHAR}, #{pageId,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="wr.com.pojo.Button" >
+    insert into wr_button
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bBid != null" >
+        b_bid,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastModifyTime != null" >
+        last_modify_time,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="bBname != null" >
+        b_bname,
+      </if>
+      <if test="operation != null" >
+        operation,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="pageId != null" >
+        page_id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bBid != null" >
+        #{bBid,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyTime != null" >
+        #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="bBname != null" >
+        #{bBname,jdbcType=VARCHAR},
+      </if>
+      <if test="operation != null" >
+        #{operation,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="pageId != null" >
+        #{pageId,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="wr.com.pojo.Button" >
+    update wr_button
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyTime != null" >
+        last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="bBname != null" >
+        b_bname = #{bBname,jdbcType=VARCHAR},
+      </if>
+      <if test="operation != null" >
+        operation = #{operation,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="pageId != null" >
+        page_id = #{pageId,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where b_bid = #{bBid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wr.com.pojo.Button" >
+    update wr_button
+    set id = #{id,jdbcType=INTEGER},
+      modifier = #{modifier,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=CHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      b_bname = #{bBname,jdbcType=VARCHAR},
+      operation = #{operation,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=VARCHAR},
+      page_id = #{pageId,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR}
+    where b_bid = #{bBid,jdbcType=VARCHAR}
+  </update>
+</mapper>

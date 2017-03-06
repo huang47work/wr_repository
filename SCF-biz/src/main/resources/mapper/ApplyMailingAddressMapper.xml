@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wr.com.mapper.ApplyMailingAddressMapper" >
+  <resultMap id="BaseResultMap" type="wr.com.pojo.ApplyMailingAddress" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="apply_mid" property="applyMid" jdbcType="VARCHAR" />
+    <result column="recipients_name" property="recipientsName" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="county" property="county" jdbcType="VARCHAR" />
+    <result column="detailed_adress" property="detailedAdress" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="if_delete" property="ifDelete" jdbcType="VARCHAR" />
+    <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, apply_mid, recipients_name, tel, province, city, county, detailed_adress, update_date, 
+    if_delete, update_user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wr_mailing_address_apply
+    where apply_mid = #{applyMid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wr_mailing_address_apply
+    where apply_mid = #{applyMid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="wr.com.pojo.ApplyMailingAddress" >
+    insert into wr_mailing_address_apply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="applyMid != null" >
+        apply_mid,
+      </if>
+      <if test="recipientsName != null" >
+        recipients_name,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="county != null" >
+        county,
+      </if>
+      <if test="detailedAdress != null" >
+        detailed_adress,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="ifDelete != null" >
+        if_delete,
+      </if>
+      <if test="updateUserId != null" >
+        update_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="applyMid != null" >
+        #{applyMid,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientsName != null" >
+        #{recipientsName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null" >
+        #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="detailedAdress != null" >
+        #{detailedAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ifDelete != null" >
+        #{ifDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="wr.com.pojo.ApplyMailingAddress" >
+    update wr_mailing_address_apply
+    <set >
+      <if test="applyMid != null" >
+        apply_mid = #{applyMid,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientsName != null" >
+        recipients_name = #{recipientsName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null" >
+        county = #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="detailedAdress != null" >
+        detailed_adress = #{detailedAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ifDelete != null" >
+        if_delete = #{ifDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserId != null" >
+        update_user_id = #{updateUserId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where apply_mid = #{applyMid,jdbcType=VARCHAR}
+  </update>
+</mapper>
